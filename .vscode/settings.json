@@ -2,5 +2,6 @@
     "python.formatting.provider": "yapf",
     "files.associations": {
         "vector": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
