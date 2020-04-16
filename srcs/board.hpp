@@ -6,21 +6,34 @@
 
 class Board {
 	public:
-		int size;
-		int **board = nullptr;
-		bool err;
+		int 	size;
+		int 	**board = nullptr;
+		bool 	err;
+
+		int		x_empty_case;
+		int		y_empty_case;
 
 		Board(Lexer *lexer);
+		Board(const Board &board);
 		~Board();
 
+		void show();
+
+		Board *move_up();
+		Board *move_down();
+		Board *move_right();
+		Board *move_left();
+
 	private:
-		bool verif_number_size(int number, int power);
+		bool 	verif_number_size(int number, int power);
 
-		void init_board();
+		void 	init_board();
 
-		bool check_value(int actual_row, int actual_col, int max);
+		bool 	check_value(int actual_row, int actual_col, int max);
 
-		bool parse_file(Lexer *lexer);
+		bool 	parse_file(Lexer *lexer);
+
+		void	find_my_empty_case();
 };
 
 #endif

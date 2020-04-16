@@ -2,7 +2,27 @@
 
 Board::Board(Lexer *lexer)
 {
-	err = parse_file(lexer);
+	if (!(err = parse_file(lexer))) {
+		this->find_my_empty_case();
+	}
+}
+
+Board::Board(const Board &clone)
+{
+	size = clone.size;
+	board = new int *[size];
+	err = clone.err;
+	x_empty_case = clone.x_empty_case;
+	y_empty_case = clone.y_empty_case;
+
+	for (int i = 0; i < size; ++i)
+	{
+		board[i] = new int[size];
+		for (int j = 0; j < size; ++j)
+		{
+			board[i][j] = clone.board[i][j];
+		}
+	}
 }
 
 Board::~Board()
@@ -16,6 +36,8 @@ Board::~Board()
 		delete board;
 	}
 }
+
+
 
 bool Board::verif_number_size(int number, int power)
 {
@@ -162,4 +184,128 @@ bool Board::parse_file(Lexer *lexer)
 		++i;
 	}
 	return (false);
+}
+
+void	Board::show()
+{
+	char c;
+
+	for (int i(0); i < this->size; i++) {
+		cout << "\\\\\\\\\\\\\\\\";
+	}
+	cout << " show start :" << endl;
+	for (int y(0); y < this->size; y++)
+	{
+		for (int x(0); x < this->size; x++)
+		{
+			cout << "   ";	
+			if (this->board[y][x] != 0) {
+				cout << this->board[y][x];
+			} 
+			else {
+				cout << '~';
+			}
+			cout << '\t';	
+		}
+		cout << endl;
+	}
+	for (int i(0); i < this->size; i++) {
+		cout << "////////";
+	}
+	cout << " show end." << endl;
+}
+
+void	Board::find_my_empty_case()
+{
+	for (int y(0); y < this->size; y++)
+	{
+		for (int x(0); x < this->size; x++)
+		{
+			if (this->board[y][x] == 0) {
+				this->x_empty_case = x;
+				this->y_empty_case = y;
+				return ;
+			}
+		}
+	}
+}
+
+// ==================================================== MOVE
+// ================
+// ======
+
+// ====== UP
+Board *Board::move_up()
+{
+	if (this->y_empty_case == 0) {
+		return (nullptr);
+	}
+
+	Board	*board_cpy = new Board(*this);
+	int		temp_case;
+
+	temp_case = board_cpy->board[board_cpy->y_empty_case - 1][board_cpy->x_empty_case];
+	board_cpy->board[board_cpy->y_empty_case - 1][board_cpy->x_empty_case] = 0;
+	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
+
+	board_cpy->y_empty_case--;
+	
+	return (board_cpy);
+}
+
+// ====== DOWN
+Board *Board::move_down()
+{
+	if (this->y_empty_case == this->size - 1) {
+		return (nullptr);
+	}
+
+	Board	*board_cpy = new Board(*this);
+	int		temp_case;
+
+	temp_case = board_cpy->board[board_cpy->y_empty_case + 1][board_cpy->x_empty_case];
+	board_cpy->board[board_cpy->y_empty_case + 1][board_cpy->x_empty_case] = 0;
+	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
+
+	board_cpy->y_empty_case++;
+	
+	return (board_cpy);
+}
+
+// ====== RIGHT
+Board *Board::move_right()
+{
+	if (this->x_empty_case == this->size - 1) {
+		return (nullptr);
+	}
+
+	Board	*board_cpy = new Board(*this);
+	int		temp_case;
+
+	temp_case = board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case + 1];
+	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case + 1] = 0;
+	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
+
+	board_cpy->x_empty_case++;
+	
+	return (board_cpy);
+}
+
+// ====== LEFT
+Board *Board::move_left()
+{
+	if (this->x_empty_case == 0) {
+		return (nullptr);
+	}
+
+	Board	*board_cpy = new Board(*this);
+	int		temp_case;
+
+	temp_case = board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case - 1];
+	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case - 1] = 0;
+	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
+
+	board_cpy->x_empty_case--;
+	
+	return (board_cpy);
 }
