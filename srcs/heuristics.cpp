@@ -11,7 +11,7 @@ int		manhattan_distance(int **board, Point *goal, int size) {
 
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
-			if (board[i][j] && goal[board[i][j]].x != i || goal[board[i][j]].y != j) {
+			if (board[i][j] && (goal[board[i][j]].x != i || goal[board[i][j]].y != j)) {
 				result += abs(i - goal[board[i][j]].x) + abs(j - goal[board[i][j]].y);
 			}
 		}
@@ -24,7 +24,7 @@ int		hamming_distance(int **board, Point *goal, int size) {
 
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
-			if (board[i][j] && goal[board[i][j]].x != i || goal[board[i][j]].y != j) {
+			if (board[i][j] && (goal[board[i][j]].x != i || goal[board[i][j]].y != j)) {
 				result++;
 			}
 		}
@@ -38,7 +38,7 @@ int		linear_conflict_plus_manhattan_distance(int **board, Point *goal, int size)
 
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
-			if (board[i][j] && goal[board[i][j]].x != i || goal[board[i][j]].y != j) {
+			if (board[i][j] && (goal[board[i][j]].x != i || goal[board[i][j]].y != j)) {
 				manhattan_result += abs(i - goal[board[i][j]].x) + abs(j - goal[board[i][j]].y);
 				if (goal[board[i][j]].x == i) {
 					for (int k = j + 1; k < size; k++) {
