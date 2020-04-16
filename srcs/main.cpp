@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "goal.hpp"
 
 int main(int args_count, char **args_value) {
 	if (args_count <= 1) {
@@ -18,5 +19,6 @@ int main(int args_count, char **args_value) {
 		delete board;
 		return (1);
 	}
+	Goal	*goal = new Goal(board->size);
 	return (0);
 }
