@@ -52,6 +52,7 @@ int		linear_conflict_plus_manhattan_distance(int **board, Point *goal, int size)
 						if (board[k][j] && goal[board[k][j]].x == k) {
 							linear_result += 2;
 						}
+					}
 				}
 			}
 		}
