@@ -5,7 +5,8 @@ Lexer::Lexer(std::string path)
     std::ifstream file(path, std::ifstream::binary);
     if (!file)
     {
-        std::cout << "File cannot be loaded" << std::endl;
+		std::cout << "File cannot be loaded" << std::endl;
+		err = true;
     }
     else
     {

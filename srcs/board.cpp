@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "goal.hpp"
 
 Board::Board(Lexer *lexer)
 {
@@ -187,52 +188,7 @@ bool Board::parse_file(Lexer *lexer)
 }
 
 bool Board::is_solvable() {
-	int result = 0;
-	int row = 0;
-	int zero_row = 0;
-	int	max = size * size;
-	int	*board_1d = new int[max];
-	int index = 0;
-
-	for (int i = 0; i < size; ++i) {
-		for (int j = 0; j < size; ++j) {
-			board_1d[index] = board[i][j];
-			index++;
-		}
-	}
-	for (int i = 0; i < max; ++i) {
-		if (i % size == 0) {
-			row++;
-		}
-		if (board_1d[i] == 0) {
-			zero_row = row;
-		}
-		else {
-			for (int j = i + 1; j < max; ++j) {
-				if (board_1d[i] > board_1d[j] && board_1d[j] != 0) {
-					result++;
-				}
-			}
-		}
-	}
-	if (size % 2 == 0) {
-		if (zero_row % 2 == 0) {
-			if (result % 2) {
-				return (true);
-			}
-			return (false);
-		}
-		else {
-			if (result % 2) {
-				return (true);
-			}
-			return (false);
-		}
-	}
-	if (result % 2) {
-		return (true);
-	}
-	return (false);
+	return (true);
 }
 
 void	Board::show()
