@@ -187,7 +187,35 @@ bool Board::parse_file(Lexer *lexer)
 	return (false);
 }
 
-bool Board::is_solvable() {
+bool Board::is_solvable(Point *pos) {
+	int	max = size * size;
+	int	*goal = new int[max];
+	int *board_1d = new int[max];
+	int	index = 0;
+	int transversion = 0;
+	int even_odd = (std::abs(pos[0].x - x_empty_case) + std::abs(pos[0].y - y_empty_case)) % 2;
+
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size; ++j) {
+			board_1d[index++] = board[i][j];
+		}
+	}
+	for (int i = 0; i < max; ++i) {
+		goal[pos[i].x * size + pos[i].y] = i;
+	}
+	for (int i = 0; i < max; ++i) {
+		for (int j = i + 1; j < max; ++j) {
+			if (goal[board_1d[i]] > goal[board_1d[j]]) {
+				transversion++;
+			}
+		}
+	}
+	transversion %= 2;
+	delete goal;
+	delete board_1d;
+	if (transversion - even_odd) {
+		return (false);
+	}
 	return (true);
 }
 

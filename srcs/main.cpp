@@ -23,17 +23,17 @@ int main(int args_count, char **args_value) {
 		return (1);
 	}
 	board_start->show();
+	Goal	*goal = new Goal(board_start->size);
 
-	if (board_start->is_solvable()) {
+	if (board_start->is_solvable(goal->pos)) {
 		std::cout << "The puzzle is solvable" << std::endl;
 	}
 	else {
-		std::cout << "The puzzle is solvable" << std::endl;
+		std::cout << "The puzzle is not solvable" << std::endl;
 		delete board_start;
 		return (1);
 	}
 
-	Goal	*goal = new Goal(board_start->size);
 	OpenList	openlist;
 
 	Node *node_1 = new Node(nullptr, nullptr);

@@ -3,6 +3,7 @@
 
 #include "main.hpp"
 #include "lexer.hpp"
+#include "goal.hpp"
 
 class Board {
 	public:
@@ -26,7 +27,7 @@ class Board {
 
 		bool	operator==(const Board &board) const;
 
-		bool	is_solvable();
+		bool	is_solvable(Point *pos);
 
 	private:
 		bool	verif_number_size(int number, int power);
