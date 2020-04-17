@@ -16,6 +16,9 @@ class Node
         Node(Board *parent_board, Board *actual_board);
         ~Node();
 
+        Board   *get_parent_board();
+        Board   *get_actual_board();
+
         int     get_g_cost() const;
         int     get_h_cost() const;
         int     get_f_cost() const;

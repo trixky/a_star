@@ -7,9 +7,9 @@
 class compareNode
 {
 public:
-    bool operator() (Node *first_node, const Node *second_node)
+    bool operator() (const Node *first_node, const Node *second_node)
     {
-        return true;
+        return (first_node->get_f_cost() >= second_node->get_f_cost() ? true : false);
     }
 };
 
@@ -24,7 +24,7 @@ class OpenList
 
         void    insert(Node *node);
         void    pop();
-        Node    *top() const;
+        Node    *top();
 };
 
 #endif

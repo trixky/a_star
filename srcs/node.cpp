@@ -7,6 +7,16 @@ Node::~Node()
 
 }
 
+Board   *Node::get_parent_board()
+{
+    return (this->parent_board);
+}
+
+Board   *Node::get_actual_board()
+{
+    return (this->actual_board);
+}
+
 int Node::get_g_cost() const
 {
     return (this->g_cost);

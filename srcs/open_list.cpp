@@ -14,15 +14,15 @@ OpenList::~OpenList()
 
 void    OpenList::insert(Node *node)
 {
-    this->insert(node);
+    this->queue.push(node);
 }
 
-Node    *OpenList::top() const
+Node    *OpenList::top()
 {
-    
+    return (this->queue.top());
 }
 
 void    OpenList::pop()
 {
-
+    this->queue.pop();
 }
