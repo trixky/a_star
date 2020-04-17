@@ -1,10 +1,5 @@
 #include <cmath>
-using namespace std;
-
-typedef struct	Point {
-	int		x;
-	int		y;
-}				Point;
+#include "goal.hpp"
 
 int		manhattan_distance(int **board, Point *goal, int size) {
 	int			result = 0;
@@ -39,7 +34,7 @@ int		linear_conflict_plus_manhattan_distance(int **board, Point *goal, int size)
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
 			if (board[i][j] && (goal[board[i][j]].x != i || goal[board[i][j]].y != j)) {
-				manhattan_result += abs(i - goal[board[i][j]].x) + abs(j - goal[board[i][j]].y);
+				manhattan_result += std::abs(i - goal[board[i][j]].x) + std::abs(j - goal[board[i][j]].y);
 				if (goal[board[i][j]].x == i) {
 					for (int k = j + 1; k < size; k++) {
 						if (board[i][k] && goal[board[i][k]].y == k) {

@@ -186,6 +186,56 @@ bool Board::parse_file(Lexer *lexer)
 	return (false);
 }
 
+bool Board::is_solvable() {
+	int result = 0;
+	int row = 0;
+	int zero_row = 0;
+	int	max = size * size;
+	int	*board_1d = new int[max];
+	int index = 0;
+
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size; ++j) {
+			board_1d[index] = board[i][j];
+			index++;
+			std::cout<<index<<"  "<<max<<std::endl;
+		}
+	}
+	for (int i = 0; i < max; ++i) {
+		if (i % size == 0) {
+			row++;
+		}
+		if (board_1d[i] == 0) {
+			zero_row = row;
+		}
+		else {
+			for (int j = i + 1; j < max; ++j) {
+				if (board_1d[i] > board_1d[j] && board_1d[j] != 0) {
+					result++;
+				}
+			}
+		}
+	}
+	if (size % 2 == 0) {
+		if (zero_row % 2 == 0) {
+			if (result % 2) {
+				return (true);
+			}
+			return (false);
+		}
+		else {
+			if (result % 2) {
+				return (false);
+			}
+			return (true);
+		}
+	}
+	if (result % 2) {
+		return (true);
+	}
+	return (false);
+}
+
 void	Board::show()
 {
 	char c;
@@ -198,14 +248,14 @@ void	Board::show()
 	{
 		for (int x(0); x < this->size; x++)
 		{
-			std::cout << "   ";	
+			std::cout << "   ";
 			if (this->board[y][x] != 0) {
 				std::cout << this->board[y][x];
-			} 
+			}
 			else {
 				std::cout << '~';
 			}
-			std::cout << '\t';	
+			std::cout << '\t';
 		}
 		std::cout << std::endl;
 	}
@@ -249,7 +299,7 @@ Board *Board::move_up()
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
 
 	board_cpy->y_empty_case--;
-	
+
 	return (board_cpy);
 }
 
@@ -268,7 +318,7 @@ Board *Board::move_down()
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
 
 	board_cpy->y_empty_case++;
-	
+
 	return (board_cpy);
 }
 
@@ -287,7 +337,7 @@ Board *Board::move_right()
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
 
 	board_cpy->x_empty_case++;
-	
+
 	return (board_cpy);
 }
 
@@ -306,7 +356,7 @@ Board *Board::move_left()
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
 
 	board_cpy->x_empty_case--;
-	
+
 	return (board_cpy);
 }
 

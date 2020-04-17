@@ -24,7 +24,15 @@ int main(int args_count, char **args_value) {
 	Goal	*goal = new Goal(board->size);
 	board->show();
 
+	if (board->is_solvable()) {
+		std::cout << "The board is solvable" << std::endl;
+	}
+	else {
+		std::cout << "The board is not solvable" << std::endl;
+		return (1);
+	}
+
 	OpenList	openlist;
-	
+
 	return (0);
 }
