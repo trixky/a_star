@@ -41,7 +41,8 @@ class Board {
 
 		bool	is_solvable(Point *pos);
 
-	
+		bool	get_err();
+		int		get_size();
 };
 
 #endif

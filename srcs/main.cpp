@@ -17,13 +17,13 @@ int main(int args_count, char **args_value) {
 	}
 	Board	*board_start = new Board(lexer);
 	delete lexer;
-	if (board_start->err == true) {
+	if (board_start->get_err() == true) {
 		std::cout << "The file is not well formated : Parser Error" << std::endl;
 		delete board_start;
 		return (1);
 	}
 	board_start->show();
-	Goal	*goal = new Goal(board_start->size);
+	Goal	*goal = new Goal(board_start->get_size());
 
 	if (board_start->is_solvable(goal->pos)) {
 		std::cout << "The puzzle is solvable" << std::endl;

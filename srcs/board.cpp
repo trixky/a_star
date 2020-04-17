@@ -263,6 +263,16 @@ void	Board::find_my_empty_case()
 	}
 }
 
+bool	Board::get_err()
+{
+	return(this->err);
+}
+
+int		Board::get_size()
+{
+	return(this->size);
+}
+
 // ==================================================== MOVE
 // ================
 // ======
