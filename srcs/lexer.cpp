@@ -1,11 +1,11 @@
 #include "lexer.hpp"
 
-Lexer::Lexer(string path)
+Lexer::Lexer(std::string path)
 {
-    ifstream file(path, ifstream::binary);
+    std::ifstream file(path, std::ifstream::binary);
     if (!file)
     {
-        cout << "File cannot be loaded" << endl;
+        std::cout << "File cannot be loaded" << std::endl;
     }
     else
     {

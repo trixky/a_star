@@ -1,24 +1,30 @@
 #include "board.hpp"
 #include "goal.hpp"
+#include "open_list.hpp"
+
 
 int main(int args_count, char **args_value) {
 	if (args_count <= 1) {
-		cout << "You should write at least one argument" << endl;
+		std::cout << "You should write at least one argument" << std::endl;
 		return (1);
 	}
 	Lexer	*lexer = new Lexer(args_value[1]);
 	if (lexer->err == true) {
-		cout << "The file is not well formated : Lexer Error" << endl;
+		std::cout << "The file is not well formated : Lexer Error" << std::endl;
 		delete lexer;
 		return (1);
 	}
 	Board	*board = new Board(lexer);
 	delete lexer;
 	if (board->err == true) {
-		cout << "The file is not well formated : Parser Error" << endl;
+		std::cout << "The file is not well formated : Parser Error" << std::endl;
 		delete board;
 		return (1);
 	}
 	Goal	*goal = new Goal(board->size);
+	board->show();
+
+	OpenList	openlist;
+	
 	return (0);
 }

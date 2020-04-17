@@ -10,8 +10,6 @@
 #include <set>
 #include <iterator>
 
-using namespace std;
-
 #define START	0
 #define NUMBER	1
 #define HASHTAG	2

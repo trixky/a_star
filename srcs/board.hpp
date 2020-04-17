@@ -24,6 +24,8 @@ class Board {
 		Board *move_right();
 		Board *move_left();
 
+		bool	operator==(const Board &board) const;
+
 	private:
 		bool 	verif_number_size(int number, int power);
 

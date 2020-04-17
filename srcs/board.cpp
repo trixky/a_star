@@ -107,7 +107,7 @@ bool Board::parse_file(Lexer *lexer)
 	{
 		return (true);
 	}
-	cout << "The size of the board is : " << size << endl;
+	std::cout << "The size of the board is : " << size << std::endl;
 	characters = test - &lexer->buffer[i];
 	if (verif_number_size(size, characters))
 	{
@@ -191,28 +191,28 @@ void	Board::show()
 	char c;
 
 	for (int i(0); i < this->size; i++) {
-		cout << "\\\\\\\\\\\\\\\\";
+		std::cout << "\\\\\\\\\\\\\\\\";
 	}
-	cout << " show start :" << endl;
+	std::cout << " show start :" << std::endl;
 	for (int y(0); y < this->size; y++)
 	{
 		for (int x(0); x < this->size; x++)
 		{
-			cout << "   ";	
+			std::cout << "   ";	
 			if (this->board[y][x] != 0) {
-				cout << this->board[y][x];
+				std::cout << this->board[y][x];
 			} 
 			else {
-				cout << '~';
+				std::cout << '~';
 			}
-			cout << '\t';	
+			std::cout << '\t';	
 		}
-		cout << endl;
+		std::cout << std::endl;
 	}
 	for (int i(0); i < this->size; i++) {
-		cout << "////////";
+		std::cout << "////////";
 	}
-	cout << " show end." << endl;
+	std::cout << " show end." << std::endl;
 }
 
 void	Board::find_my_empty_case()
@@ -308,4 +308,24 @@ Board *Board::move_left()
 	board_cpy->x_empty_case--;
 	
 	return (board_cpy);
+}
+
+// ==================================================== OPERATOR
+// ================
+// ======
+
+
+// ====== [ == ]
+bool	Board::operator==(const Board &board) const
+{
+	for (int y(0); y < this->size; y++)
+	{
+		for (int x(0); x < this->size; x++)
+		{
+			if (this->board[y][x] != board.board[y][x]) {
+				return (false);
+			}
+		}
+	}
+	return (true);
 }

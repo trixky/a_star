@@ -8,9 +8,9 @@ class Lexer {
 		char	*buffer = nullptr;
 		int		length;
 		bool	err;
-		vector<int> *lexem = new vector<int>;
+		std::vector<int> *lexem = new std::vector<int>;
 
-		Lexer(string path);
+		Lexer(std::string path);
 		~Lexer();
 
 	private:

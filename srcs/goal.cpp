@@ -22,25 +22,25 @@ Goal::Goal(int size) {
 			sens.x = 1;
 			sens.y = 0;
 			right++;
-			std::cout << "h1" << endl;
+			std::cout << "h1" << std::endl;
 		}
 		else if (sens.x == 1 && i + bottom == size_minus_one) {
 			sens.x = 0;
 			sens.y = -1;
 			bottom++;
-			std::cout << "h2" << endl;
+			std::cout << "h2" << std::endl;
 		}
 		else if (sens.y == -1 && j == left) {
 			sens.x = -1;
 			sens.y = 0;
 			left++;
-			std::cout << "h3" << endl;
+			std::cout << "h3" << std::endl;
 		}
 		else if (sens.x == -1 && i == top) {
 			sens.x = 0;
 			sens.y = 1;
 			top++;
-			std::cout << "h4" << endl;
+			std::cout << "h4" << std::endl;
 		}
 		i += sens.x;
 		j += sens.y;
