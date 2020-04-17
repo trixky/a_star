@@ -8,20 +8,23 @@ Board::Board(Lexer *lexer)
 	}
 }
 
-Board::Board(const Board &clone)
+Board::Board(Board *clone)
 {
-	size = clone.size;
-	board = new int *[size];
-	err = clone.err;
-	x_empty_case = clone.x_empty_case;
-	y_empty_case = clone.y_empty_case;
+	this->g_cost = clone->g_cost;
+	this->h_cost = clone->h_cost;
+	this->size = clone->size;
+	this->board = new int *[size];
+	this->err = clone->err;
+	this->x_empty_case = clone->x_empty_case;
+	this->y_empty_case = clone->y_empty_case;
+	this->parent_board = clone;
 
 	for (int i = 0; i < size; ++i)
 	{
 		board[i] = new int[size];
 		for (int j = 0; j < size; ++j)
 		{
-			board[i][j] = clone.board[i][j];
+			board[i][j] = clone->board[i][j];
 		}
 	}
 }
@@ -263,6 +266,11 @@ void	Board::find_my_empty_case()
 	}
 }
 
+Board   *Board::get_parent_board()
+{
+    return (this->parent_board);
+}
+
 bool	Board::get_err()
 {
 	return(this->err);
@@ -272,6 +280,32 @@ int		Board::get_size()
 {
 	return(this->size);
 }
+
+int Board::get_g_cost() const
+{
+    return (this->g_cost);
+}
+
+int Board::get_h_cost() const
+{
+    return (this->h_cost);
+}
+
+int Board::get_f_cost() const
+{
+    return (this->g_cost + this->h_cost);
+}
+
+void Board::set_g_cost(int cost)
+{
+    this->g_cost = cost;
+}
+
+void Board::set_h_cost(int cost)
+{
+    this->h_cost = cost;
+}
+
 
 // ==================================================== MOVE
 // ================

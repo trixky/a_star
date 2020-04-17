@@ -2,29 +2,29 @@
 #define OPEN_LIST_HPP
 
 #include "main.hpp"
-#include "node.hpp"
+#include "board.hpp"
 
-class compareNode
+class compareBoard
 {
 public:
-    bool operator() (const Node *first_node, const Node *second_node)
+    bool operator() (const Board *first_board, const Board *second_board)
     {
-        return (first_node->get_f_cost() >= second_node->get_f_cost() ? true : false);
+        return (first_board->get_f_cost() >= second_board->get_f_cost() ? true : false);
     }
 };
 
 class OpenList
 {
     private:
-        std::priority_queue<Node *, std::vector<Node *>, compareNode>   queue;
+        std::priority_queue<Board *, std::vector<Board *>, compareBoard>   queue;
 
     public:
         OpenList();
         ~OpenList();
 
-        void    insert(Node *node);
+        void    push(Board *board);
         void    pop();
-        Node    *top();
+        Board    *top();
 };
 
 #endif

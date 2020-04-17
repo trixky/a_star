@@ -1,7 +1,6 @@
 #include "board.hpp"
 #include "goal.hpp"
 #include "open_list.hpp"
-#include "node.hpp"
 
 
 int main(int args_count, char **args_value) {
@@ -36,16 +35,18 @@ int main(int args_count, char **args_value) {
 
 	OpenList	openlist;
 
-	Node *node_1 = new Node(nullptr, nullptr);
-	node_1->set_g_cost(10);
-	node_1->set_h_cost(10);
+	board_start->show();
+	board_start->set_g_cost(10);
+	board_start->set_h_cost(10);
 
-	Node *node_2 = new Node(nullptr, nullptr);
-	node_2->set_g_cost(20);
-	node_2->set_h_cost(20);
+	Board *board_1 = board_start->move_up();
+	board_1->set_g_cost(20);
+	board_1->set_h_cost(20);
 
-	openlist.insert(node_2);
-	openlist.insert(node_1);
+	board_1->show();
+
+	openlist.push(board_1);
+	openlist.push(board_start);
 
 	std::cout << openlist.top()->get_f_cost() << std::endl;
 

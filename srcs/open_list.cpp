@@ -12,12 +12,12 @@ OpenList::~OpenList()
     }
 }
 
-void    OpenList::insert(Node *node)
+void    OpenList::push(Board *board)
 {
-    this->queue.push(node);
+    this->queue.push(board);
 }
 
-Node    *OpenList::top()
+Board    *OpenList::top()
 {
     return (this->queue.top());
 }

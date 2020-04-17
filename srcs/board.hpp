@@ -27,7 +27,7 @@ class Board {
 
 	public:
 		Board(Lexer *lexer);
-		Board(const Board &board);
+		Board(Board *board);
 		~Board();
 
 		void show();
@@ -43,6 +43,15 @@ class Board {
 
 		bool	get_err();
 		int		get_size();
+
+        Board   *get_parent_board();
+
+		int     get_g_cost() const;
+        int     get_h_cost() const;
+        int     get_f_cost() const;
+
+        void    set_g_cost(int cost);
+        void    set_h_cost(int cost);
 };
 
 #endif
