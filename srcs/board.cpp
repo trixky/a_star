@@ -139,7 +139,7 @@ bool Board::parse_file(Lexer *lexer)
 		{
 			board[row][col] = strtol(&lexer->buffer[i], &test, 10);
 			characters = test - &lexer->buffer[i];
-			if (verif_number_size(size, characters))
+			if (verif_number_size(board[row][col], characters))
 			{
 				return (true);
 			}
@@ -198,7 +198,6 @@ bool Board::is_solvable() {
 		for (int j = 0; j < size; ++j) {
 			board_1d[index] = board[i][j];
 			index++;
-			std::cout<<index<<"  "<<max<<std::endl;
 		}
 	}
 	for (int i = 0; i < max; ++i) {
@@ -225,9 +224,9 @@ bool Board::is_solvable() {
 		}
 		else {
 			if (result % 2) {
-				return (false);
+				return (true);
 			}
-			return (true);
+			return (false);
 		}
 	}
 	if (result % 2) {
