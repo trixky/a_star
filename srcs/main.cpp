@@ -1,7 +1,6 @@
 #include "board.hpp"
 #include "goal.hpp"
 #include "open_list.hpp"
-#include "node.hpp"
 
 
 int main(int args_count, char **args_value) {
@@ -15,38 +14,17 @@ int main(int args_count, char **args_value) {
 		delete lexer;
 		return (1);
 	}
-	Board	*board_start = new Board(lexer);
+	Board	*board = new Board(lexer);
 	delete lexer;
-	if (board_start->err == true) {
+	if (board->err == true) {
 		std::cout << "The file is not well formated : Parser Error" << std::endl;
-		delete board_start;
+		delete board;
 		return (1);
 	}
-	Goal	*goal = new Goal(board_start->size);
-	board_start->show();
-
-	if (board_start->is_solvable()) {
-		std::cout << "The board is solvable" << std::endl;
-	}
-	else {
-		std::cout << "The board is not solvable" << std::endl;
-		return (1);
-	}
+	Goal	*goal = new Goal(board->size);
+	board->show();
 
 	OpenList	openlist;
-
-	Node *node_1 = new Node(nullptr, nullptr);
-	node_1->set_g_cost(10);
-	node_1->set_h_cost(10);
-
-	Node *node_2 = new Node(nullptr, nullptr);
-	node_2->set_g_cost(20);
-	node_2->set_h_cost(20);
-
-	openlist.insert(node_2);
-	openlist.insert(node_1);
-
-	std::cout << openlist.top()->get_f_cost() << std::endl;
-
+	
 	return (0);
 }
