@@ -5,6 +5,7 @@ Board::Board(Lexer *lexer)
 {
 	if (!(err = parse_file(lexer))) {
 		this->find_my_empty_case();
+		this->refresh_hash();
 	}
 }
 
@@ -18,6 +19,7 @@ Board::Board(Board *clone)
 	this->x_empty_case = clone->x_empty_case;
 	this->y_empty_case = clone->y_empty_case;
 	this->parent_board = clone;
+	this->hash = clone->hash;
 
 	for (int i = 0; i < size; ++i)
 	{
@@ -271,6 +273,11 @@ Board   *Board::get_parent_board()
     return (this->parent_board);
 }
 
+std::string     Board::get_hash() const
+{
+	return (this->hash);
+}
+
 bool	Board::get_err()
 {
 	return(this->err);
@@ -306,6 +313,18 @@ void Board::set_h_cost(int cost)
     this->h_cost = cost;
 }
 
+void	Board::refresh_hash()
+{
+	this->hash.clear();
+	for (int y(0); y < this->size; y++)
+	{
+		for (int x(0); x < this->size; x++)
+		{
+			this->hash += this->board[y][x];
+		}
+	}
+}
+
 
 // ==================================================== MOVE
 // ================
@@ -326,6 +345,7 @@ Board *Board::move_up()
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
 
 	board_cpy->y_empty_case--;
+	board_cpy->refresh_hash();
 
 	return (board_cpy);
 }
@@ -345,6 +365,7 @@ Board *Board::move_down()
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
 
 	board_cpy->y_empty_case++;
+	board_cpy->refresh_hash();
 
 	return (board_cpy);
 }
@@ -364,6 +385,7 @@ Board *Board::move_right()
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
 
 	board_cpy->x_empty_case++;
+	board_cpy->refresh_hash();
 
 	return (board_cpy);
 }
@@ -383,6 +405,7 @@ Board *Board::move_left()
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case] = temp_case;
 
 	board_cpy->x_empty_case--;
+	board_cpy->refresh_hash();
 
 	return (board_cpy);
 }

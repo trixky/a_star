@@ -1,7 +1,7 @@
 #include "board.hpp"
 #include "goal.hpp"
 #include "open_list.hpp"
-
+#include "closed_list.hpp"
 
 int main(int args_count, char **args_value) {
 	if (args_count <= 1) {
@@ -34,21 +34,7 @@ int main(int args_count, char **args_value) {
 	}
 
 	OpenList	openlist;
-
-	board_start->show();
-	board_start->set_g_cost(10);
-	board_start->set_h_cost(10);
-
-	Board *board_1 = board_start->move_up();
-	board_1->set_g_cost(20);
-	board_1->set_h_cost(20);
-
-	board_1->show();
-
-	openlist.push(board_1);
-	openlist.push(board_start);
-
-	std::cout << openlist.top()->get_f_cost() << std::endl;
-
+	ClosedList	close_list;
+	
 	return (0);
 }
