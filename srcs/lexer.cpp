@@ -36,7 +36,7 @@ Lexer::~Lexer()
 	delete lexem;
 	if (buffer)
 	{
-		delete buffer;
+		delete []buffer;
 	}
 }
 

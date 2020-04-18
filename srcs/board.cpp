@@ -41,9 +41,9 @@ Board::~Board()
 	{
 		for (int i = 0; i < size; ++i)
 		{
-			delete board[i];
+			delete []board[i];
 		}
-		delete board;
+		delete []board;
 	}
 }
 
@@ -220,8 +220,8 @@ bool Board::is_solvable(Point *pos) {
 		}
 	}
 	transversion %= 2;
-	delete goal;
-	delete board_1d;
+	delete []goal;
+	delete []board_1d;
 	if (transversion - even_odd) {
 		return (false);
 	}

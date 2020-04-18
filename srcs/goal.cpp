@@ -47,5 +47,5 @@ Goal::Goal(int size) {
 }
 
 Goal::~Goal() {
-	delete pos;
+	delete []pos;
 }

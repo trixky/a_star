@@ -4,31 +4,41 @@
 #include "closed_list.hpp"
 #include "heuristics.hpp"
 
-void	show_ride_up(Board *board)
+int		show_ride_up(Board *board)
 {
+	int		move = 0;
+
 	while (board->get_parent_board() != nullptr)
 	{
 		board->show();
 		board = board->get_parent_board();
+		move++;
 	}
+	return (move);
 }
 
-void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
+int		child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
 	if (child != nullptr) {
 		child->set_h_cost(hrs(child->get_board(), goal->pos, child->get_size()));
 		if (!close_list.already_exist(child)) {
 			open_list.push(child);
+			return (1);
 		}
 	}
+	return (0);
 }
 
 void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
-	Board *child[4];
+	Board	*child[4];
+	int		time_complexity = 0;
+	int		memory_complexity = 0;
+	int		nbr_of_moves;
 
 	open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
 	while (!open_list.empty() && open_list.top()->get_h_cost() != 0) {
+		time_complexity++;
 		child[0] = open_list.top()->move_up();
 		child[1] = open_list.top()->move_right();
 		child[2] = open_list.top()->move_down();
@@ -36,12 +46,15 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*
 
 		close_list.insert(open_list.pop());
 
-		child_handle(child[0], goal, open_list, close_list, (*hrs));
-		child_handle(child[1], goal, open_list, close_list, (*hrs));
-		child_handle(child[2], goal, open_list, close_list, (*hrs));
-		child_handle(child[3], goal, open_list, close_list, (*hrs));
+		memory_complexity += child_handle(child[0], goal, open_list, close_list, (*hrs));
+		memory_complexity += child_handle(child[1], goal, open_list, close_list, (*hrs));
+		memory_complexity += child_handle(child[2], goal, open_list, close_list, (*hrs));
+		memory_complexity += child_handle(child[3], goal, open_list, close_list, (*hrs));
 	}
-	show_ride_up(open_list.top());
+	nbr_of_moves = show_ride_up(open_list.top());
+	std::cout << "Complexity in time : [ " << time_complexity << " ]" << std::endl;
+	std::cout << "Complexity in memory : [ " << memory_complexity << " ]" << std::endl;
+	std::cout << "Number of moves from initial state : [ " << nbr_of_moves << " ]" << std::endl;
 }
 
 int		usage() {
