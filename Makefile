@@ -9,7 +9,7 @@ NAME		= n_puzzle
 # **************************************************************************** #
 
 CC 			= g++
-CFLAGS		= #-Wall -Wextra -Werror
+CFLAGS		= -std=c++17 #-Wall -Wextra -Werror
 
 FSAN		= #-fsanitize=address
 DEBUG		= #-g3
