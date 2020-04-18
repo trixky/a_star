@@ -31,7 +31,7 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*
 {
 	Board *child[4];
 	while (!open_list.empty()) {
-		usleep(100000);
+		usleep(1000000);
 		std::cout << open_list.top()->get_last_move() << std::endl;
 		// open_list.top()->show();
 		std::cout << "**************************************** move_up" << std::endl;
