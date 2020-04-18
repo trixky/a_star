@@ -3,6 +3,11 @@
 #include "open_list.hpp"
 #include "closed_list.hpp"
 
+void	algo_a_star(Board *board_start, OpenList &openlist, ClosedList &close_list)
+{
+
+}
+
 int main(int args_count, char **args_value) {
 	if (args_count <= 1) {
 		std::cout << "You should write at least one argument" << std::endl;
@@ -35,6 +40,6 @@ int main(int args_count, char **args_value) {
 
 	OpenList	openlist;
 	ClosedList	close_list;
-	
+
 	return (0);
 }

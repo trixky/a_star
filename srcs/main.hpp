@@ -17,4 +17,10 @@
 #define ENDLINE	3
 #define SPACE	4
 
+#define HERE    0
+#define UP      1
+#define RIGHT   2
+#define DOWN    3
+#define LEFT    4
+
 #endif

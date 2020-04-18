@@ -20,6 +20,8 @@ class Board {
 		int			x_empty_case;
 		int			y_empty_case;
 
+		short		last_move;
+
 		bool		verif_number_size(int number, int power);
 		void		init_board();
 		bool		check_value(int actual_row, int actual_col, int max);
@@ -51,12 +53,14 @@ class Board {
 
 		std::string     get_hash() const;
 
-		int				get_g_cost() const;
-        int				get_h_cost() const;
-        int				get_f_cost() const;
+		int     		get_g_cost() const;
+        int     		get_h_cost() const;
+        int     		get_f_cost() const;
+		int				get_last_move() const;
 
-        void			set_g_cost(int cost);
-        void			set_h_cost(int cost);
+        void    		set_g_cost(int cost);
+        void    		set_h_cost(int cost);
+		void			set_last_move(int move);
 };
 
 #endif
