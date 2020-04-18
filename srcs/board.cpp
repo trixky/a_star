@@ -8,6 +8,7 @@ Board::Board(Lexer *lexer)
 		this->refresh_hash();
 		this->set_last_move(HERE);
 		this->parent_board = nullptr;
+		this->g_cost = 0;
 	}
 }
 
@@ -244,6 +245,9 @@ void	Board::show()
 		std::cout << "\\\\\\\\\\\\\\\\";
 	}
 	std::cout << " show start :" << std::endl;
+	std::cout << "   g_cost = " << this->get_g_cost() << std::endl;
+	std::cout << "   h_cost = " << this->get_h_cost() << std::endl;
+	std::cout << "   f_cost = " << this->get_f_cost() << std::endl;
 	for (int y(0); y < this->size; y++)
 	{
 		for (int x(0); x < this->size; x++)
