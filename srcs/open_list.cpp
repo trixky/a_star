@@ -35,3 +35,8 @@ bool	OpenList::empty() const
 {
 	return (this->queue.empty());
 }
+
+int		OpenList::size() const
+{
+	return (this->queue.size());
+}

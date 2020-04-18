@@ -24,3 +24,9 @@ bool    ClosedList::already_exist(Board *open_list_board)
     }
     return (false);
 }
+
+int	    ClosedList::size() const
+{
+	return (this->map.size());
+}
+

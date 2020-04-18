@@ -15,6 +15,7 @@ class ClosedList
 
         void    insert(Board *board);
         bool    already_exist(Board *board);
+        int	    size() const;
 };
 
 #endif

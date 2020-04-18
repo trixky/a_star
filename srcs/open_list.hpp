@@ -26,6 +26,7 @@ class OpenList
         Board	*pop();
         Board	*top();
 		bool	empty() const;
+		int		size() const;
 };
 
 #endif
