@@ -14,8 +14,6 @@ void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &clo
 		}
 		else {
 			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ on push pas le child" << std::endl;
-			usleep(2000000);
-
 		}
 	}
 }
@@ -23,13 +21,20 @@ void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &clo
 void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
 	Board *child[4];
+	int		best_h_cost(1000);
 
 	open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
-	while (!open_list.empty() && !open_list.top()->is_success(goal->pos)) {
-		usleep(100000);
+	while (!open_list.empty()) {
+		// usleep(100000);
+		if (open_list.top()->get_h_cost() < best_h_cost) {
+			best_h_cost = open_list.top()->get_h_cost();
+		}
+		if (best_h_cost == 0)
+			break;
 		std::cout << "\n||||||||||||||||||||||||||||||||||||||||||||||||||| DEPART" << std::endl;
 		std::cout << "||||||||||||||||||||||||||||||||||||||||||||||||||| DEPART" << std::endl;
 		std::cout << "||||||||||||||||||||||||||||||||||||||||||||||||||| DEPART" << std::endl;
+		std::cout << "||||||||||||||| best_h_cost = " << best_h_cost << std::endl;
 		std::cout << "||||||||||||||| open_list.size = " << open_list.size() << std::endl;
 		std::cout << "||||||||||||||| close_list.size = " << close_list.size() << std::endl;
 		std::cout << "||||||||||||||| open_list.top()->show()\n" << std::endl;
