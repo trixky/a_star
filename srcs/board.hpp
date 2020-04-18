@@ -35,7 +35,8 @@ class Board {
 		Board(Board *board);
 		~Board();
 
-		void show();
+		void show() const;
+		void show_more() const;
 
 		Board			*move_up();
 		Board			*move_down();

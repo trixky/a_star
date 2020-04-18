@@ -237,10 +237,28 @@ bool	Board::is_success(Point *goal) {
 	return (true);
 }
 
-void	Board::show()
+void	Board::show() const
 {
-	char c;
+	for (int y(0); y < this->size; y++)
+	{
+		std::cout << "|\t";
+		for (int x(0); x < this->size; x++)
+		{
+			if (this->board[y][x] != 0) {
+				std::cout << this->board[y][x];
+			}
+			else {
+				std::cout << '~';
+			}
+			std::cout << '\t';
+		}
+		std::cout << "|" << std::endl;
+	}
+	std::cout << "\n" << std::endl;
+}
 
+void	Board::show_more() const
+{
 	for (int i(0); i < this->size; i++) {
 		std::cout << "\\\\\\\\\\\\\\\\";
 	}
@@ -261,12 +279,12 @@ void	Board::show()
 			}
 			std::cout << '\t';
 		}
-		std::cout << std::endl;
 	}
 	for (int i(0); i < this->size; i++) {
 		std::cout << "////////";
 	}
 	std::cout << " show end." << std::endl;
+	std::cout << "\n" << std::endl;
 }
 
 void	Board::find_my_empty_case()

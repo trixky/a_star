@@ -4,6 +4,15 @@
 #include "closed_list.hpp"
 #include "heuristics.hpp"
 
+void	show_ride_up(Board *board)
+{
+	while (board->get_parent_board() != nullptr)
+	{
+		board->show();
+		board = board->get_parent_board();
+	}
+}
+
 void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
 	if (child != nullptr) {
@@ -32,7 +41,7 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*
 		child_handle(child[2], goal, open_list, close_list, (*hrs));
 		child_handle(child[3], goal, open_list, close_list, (*hrs));
 	}
-	open_list.top()->show();
+	show_ride_up(open_list.top());
 }
 
 int		usage() {
