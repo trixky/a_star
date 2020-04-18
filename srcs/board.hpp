@@ -14,6 +14,7 @@ class Board {
         int			h_cost;
 
 		int			size;
+		int			size_square;
 		int			**board = nullptr;
 		bool		err;
 

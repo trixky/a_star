@@ -111,7 +111,8 @@ bool Board::parse_file(Lexer *lexer)
 		++i;
 	}
 	size = strtol(&lexer->buffer[i], &test, 10);
-	if (size <= 1 || size >= 4096)
+	size_square = size * size;
+	if (size <= 2 || size >= 4096)
 	{
 		return (true);
 	}
@@ -138,7 +139,7 @@ bool Board::parse_file(Lexer *lexer)
 		return (true);
 	}
 	init_board();
-	max = size * size - 1;
+	max = size_square - 1;
 	row = 0;
 	while (i < lexer->length && row < size)
 	{
@@ -195,9 +196,8 @@ bool Board::parse_file(Lexer *lexer)
 }
 
 bool Board::is_solvable(Point *pos) {
-	int	max = size * size;
-	int	*goal = new int[max];
-	int *board_1d = new int[max];
+	int	*goal = new int[size_square];
+	int *board_1d = new int[size_square];
 	int	index = 0;
 	int transversion = 0;
 	int even_odd = (std::abs(pos[0].x - x_empty_case) + std::abs(pos[0].y - y_empty_case)) % 2;
@@ -207,11 +207,11 @@ bool Board::is_solvable(Point *pos) {
 			board_1d[index++] = board[i][j];
 		}
 	}
-	for (int i = 0; i < max; ++i) {
+	for (int i = 0; i < size_square; ++i) {
 		goal[pos[i].x * size + pos[i].y] = i;
 	}
-	for (int i = 0; i < max; ++i) {
-		for (int j = i + 1; j < max; ++j) {
+	for (int i = 0; i < size_square; ++i) {
+		for (int j = i + 1; j < size_square; ++j) {
 			if (goal[board_1d[i]] > goal[board_1d[j]]) {
 				transversion++;
 			}
@@ -227,8 +227,7 @@ bool Board::is_solvable(Point *pos) {
 }
 
 bool	Board::is_success(Point *goal) {
-	int		max = size * size;
-	for (int i = 0; i < max; ++i) {
+	for (int i = 0; i < size_square; ++i) {
 		if (i != board[goal[i].x][goal[i].y]) {
 			return (false);
 		}
