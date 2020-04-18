@@ -10,6 +10,7 @@
 #include <set>
 #include <iterator>
 #include <unordered_map>
+#include <unistd.h>
 
 #define START	0
 #define NUMBER	1

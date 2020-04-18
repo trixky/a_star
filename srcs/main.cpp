@@ -4,47 +4,45 @@
 #include "closed_list.hpp"
 #include "heuristics.hpp"
 
-void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list)
+int		manhattan_distance_temp(int **board, Point *goal, int size) {
+	int			result = 0;
+
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size; ++j) {
+			if (board[i][j] && (goal[board[i][j]].x != i || goal[board[i][j]].y != j)) {
+				result += abs(i - goal[board[i][j]].x) + abs(j - goal[board[i][j]].y);
+			}
+		}
+	}
+	return (result);
+}
+
+void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, Heuristic *hrs)
 {
-	Board *temp_board;
+	if (child != nullptr) {
+		child->set_h_cost(manhattan_distance_temp(child->get_board(), goal->pos, child->get_size()));
+		if (!close_list.already_exist(child)) {
+			open_list.push(child);
+		}
+	}
+}
 
+void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, Heuristic *hrs)
+{
+	Board *child;
+	usleep(1000);
 	while (!open_list.empty()) {
-
-		temp_board = open_list.top()->move_up();
-		if (temp_board != nullptr) {
-			temp_board->set_h_cost(333);
-			if (!close_list.already_exist(temp_board)) {
-				open_list.push(temp_board);
-			}
-		}
-
-		temp_board = open_list.top()->move_right();
-		if (temp_board != nullptr) {
-			temp_board->set_h_cost(333);
-			if (!close_list.already_exist(temp_board)) {
-				open_list.push(temp_board);
-			}
-		}
-
-		temp_board = open_list.top()->move_down();
-		if (temp_board != nullptr) {
-			temp_board->set_h_cost(333);
-			if (!close_list.already_exist(temp_board)) {
-				open_list.push(temp_board);
-			}
-		}
-
-		temp_board = open_list.top()->move_left();
-		if (temp_board != nullptr) {
-			temp_board->set_h_cost(333);
-			if (!close_list.already_exist(temp_board)) {
-				open_list.push(temp_board);
-			}
-		}
-
+		open_list.top()->show();
+		child = open_list.top()->move_up();
+		child_handle(child, goal, open_list, close_list, hrs);
+		child = open_list.top()->move_right();
+		child_handle(child, goal, open_list, close_list, hrs);
+		child = open_list.top()->move_down();
+		child_handle(child, goal, open_list, close_list, hrs);
+		child = open_list.top()->move_left();
+		child_handle(child, goal, open_list, close_list, hrs);
 
 		close_list.insert(open_list.pop());
-		open_list.pop();
 	}
 	if (!open_list.empty()) {
 		std::cout << "open list vide !" << std::endl;
@@ -116,7 +114,7 @@ int		main(int args_count, char **args_value) {
 
 	open_list.push(board_start);
 
-	algo_a_star(goal, open_list, close_list);
+	algo_a_star(goal, open_list, close_list, hrs);
 
 	delete goal;
 	delete board_start;

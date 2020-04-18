@@ -320,6 +320,11 @@ int		Board::get_last_move() const
     return (this->last_move);
 }
 
+int				**Board::get_board() const
+{
+	return (this->board);
+}
+
 void 	Board::set_g_cost(int cost)
 {
     this->g_cost = cost;

@@ -58,6 +58,7 @@ class Board {
         int     		get_h_cost() const;
         int     		get_f_cost() const;
 		int				get_last_move() const;
+		int				**get_board() const;
 
         void    		set_g_cost(int cost);
         void    		set_h_cost(int cost);
