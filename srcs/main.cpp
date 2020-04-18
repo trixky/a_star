@@ -29,21 +29,32 @@ void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &clo
 
 void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, Heuristic *hrs)
 {
-	Board *child;
-	usleep(1000);
+	Board *child[4];
 	while (!open_list.empty()) {
-		open_list.top()->show();
-		child = open_list.top()->move_up();
-		child_handle(child, goal, open_list, close_list, hrs);
-		child = open_list.top()->move_right();
-		child_handle(child, goal, open_list, close_list, hrs);
-		child = open_list.top()->move_down();
-		child_handle(child, goal, open_list, close_list, hrs);
-		child = open_list.top()->move_left();
-		child_handle(child, goal, open_list, close_list, hrs);
+		usleep(100000);
+		std::cout << open_list.top()->get_last_move() << std::endl;
+		// open_list.top()->show();
+		std::cout << "**************************************** move_up" << std::endl;
+		child[0] = open_list.top()->move_up();
+		std::cout << "**************************************** move_right" << std::endl;
+		child[1] = open_list.top()->move_right();
+		std::cout << "**************************************** move_down" << std::endl;
+		child[2] = open_list.top()->move_down();
+		std::cout << "**************************************** move_left" << std::endl;
+		child[3] = open_list.top()->move_left();
+
+		std::cout << "**************************************** CHILD HANDLE" << std::endl;
+
+		child_handle(child[0], goal, open_list, close_list, hrs);
+		child_handle(child[1], goal, open_list, close_list, hrs);
+		child_handle(child[2], goal, open_list, close_list, hrs);
+		child_handle(child[3], goal, open_list, close_list, hrs);
+
+		std::cout << "**************************************** INSERT" << std::endl;
 
 		close_list.insert(open_list.pop());
 	}
+	std::cout << "\n\n\n**************************************** ON SORT DE WHILE\n\n\n" << std::endl;
 	if (!open_list.empty()) {
 		std::cout << "open list vide !" << std::endl;
 	}
@@ -106,8 +117,6 @@ int		main(int args_count, char **args_value) {
 		delete board_start;
 		return (1);
 	}
-
-	board_start->show();
 
 	OpenList	open_list;
 	ClosedList	close_list;
