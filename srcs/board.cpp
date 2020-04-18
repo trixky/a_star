@@ -224,6 +224,16 @@ bool Board::is_solvable(Point *pos) {
 	return (true);
 }
 
+bool	Board::is_success(Point *goal) {
+	int		max = size * size;
+	for (int i = 0; i < max; ++i) {
+		if (i != board[goal[i].x][goal[i].y]) {
+			return (false);
+		}
+	}
+	return (true);
+}
+
 void	Board::show()
 {
 	char c;

@@ -8,10 +8,10 @@
 class Board {
 	private:
 
-		Board  		*parent_board;
+		Board		*parent_board;
         std::string	hash;
-		int     	g_cost;
-        int     	h_cost;
+		int			g_cost;
+        int			h_cost;
 
 		int			size;
 		int			**board = nullptr;
@@ -26,7 +26,7 @@ class Board {
 		bool		parse_file(Lexer *lexer);
 		void		find_my_empty_case();
 		void		refresh_hash();
-		
+
 	public:
 		Board(Lexer *lexer);
 		Board(Board *board);
@@ -34,28 +34,29 @@ class Board {
 
 		void show();
 
-		Board 			*move_up();
-		Board 			*move_down();
-		Board 			*move_right();
-		Board 			*move_left();
+		Board			*move_up();
+		Board			*move_down();
+		Board			*move_right();
+		Board			*move_left();
 
 		bool			operator==(const Board &board) const;
 
 		bool			is_solvable(Point *pos);
+		bool			is_success(Point *pos);
 
 		bool			get_err();
 		int				get_size();
 
-        Board   		*get_parent_board();
+        Board			*get_parent_board();
 
 		std::string     get_hash() const;
 
-		int     		get_g_cost() const;
-        int     		get_h_cost() const;
-        int     		get_f_cost() const;
+		int				get_g_cost() const;
+        int				get_h_cost() const;
+        int				get_f_cost() const;
 
-        void    		set_g_cost(int cost);
-        void    		set_h_cost(int cost);
+        void			set_g_cost(int cost);
+        void			set_h_cost(int cost);
 };
 
 #endif
