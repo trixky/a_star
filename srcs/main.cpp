@@ -17,17 +17,17 @@ int		manhattan_distance_temp(int **board, Point *goal, int size) {
 	return (result);
 }
 
-void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, Heuristic *hrs)
+void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
 	if (child != nullptr) {
-		child->set_h_cost(manhattan_distance_temp(child->get_board(), goal->pos, child->get_size()));
+		child->set_h_cost(hrs(child->get_board(), goal->pos, child->get_size()));
 		if (!close_list.already_exist(child)) {
 			open_list.push(child);
 		}
 	}
 }
 
-void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, Heuristic *hrs)
+void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
 	Board *child[4];
 	while (!open_list.empty()) {
@@ -45,10 +45,10 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, Heuris
 
 		std::cout << "**************************************** CHILD HANDLE" << std::endl;
 
-		child_handle(child[0], goal, open_list, close_list, hrs);
-		child_handle(child[1], goal, open_list, close_list, hrs);
-		child_handle(child[2], goal, open_list, close_list, hrs);
-		child_handle(child[3], goal, open_list, close_list, hrs);
+		child_handle(child[0], goal, open_list, close_list, (*hrs));
+		child_handle(child[1], goal, open_list, close_list, (*hrs));
+		child_handle(child[2], goal, open_list, close_list, (*hrs));
+		child_handle(child[3], goal, open_list, close_list, (*hrs));
 
 		std::cout << "**************************************** INSERT" << std::endl;
 
@@ -82,7 +82,6 @@ int		main(int args_count, char **args_value) {
 	if (strcmp(args_value[1], "-0") && strcmp(args_value[1], "-1") && strcmp(args_value[1], "-2")) {
 		return (usage());
 	}
-	Heuristic	*hrs = new Heuristic(args_value[1]);
 
 	// Verify if the algorithm is well chosen.
 	if (strcmp(args_value[2], "-g") && strcmp(args_value[2], "-u")) {
@@ -107,6 +106,18 @@ int		main(int args_count, char **args_value) {
 	// Create a the goal as reversed puzzle.
 	Goal	*goal = new Goal(board_start->get_size());
 
+	// Create the pointer for the heuristic.
+	int		(*hrs)(int **, Point *, int);
+	if (args_value[1][1] == '0') {
+		hrs = &manhattan_distance;
+	}
+	else if (args_value[1][1] == '1') {
+		hrs = &hamming_distance;
+	}
+	else {
+		hrs = &linear_conflict_plus_manhattan_distance;
+	}
+
 	// Verify if the board is solvable.
 	if (board_start->is_solvable(goal->pos)) {
 		std::cout << "The puzzle is solvable" << std::endl;
@@ -123,8 +134,7 @@ int		main(int args_count, char **args_value) {
 
 	open_list.push(board_start);
 
-	algo_a_star(goal, open_list, close_list, hrs);
-
+	algo_a_star(goal, open_list, close_list, (*hrs));
 	delete goal;
 	delete board_start;
 	return (0);

@@ -2,19 +2,7 @@
 #include "goal.hpp"
 #include "heuristics.hpp"
 
-Heuristic::Heuristic(char *arg) {
-	if (arg[1] == '0') {
-		heuristic = &Heuristic::manhattan_distance;
-	}
-	else if (arg[1] == '1') {
-		heuristic = &Heuristic::hamming_distance;
-	}
-	else {
-		heuristic = &Heuristic::linear_conflict_plus_manhattan_distance;
-	}
-}
-
-int		Heuristic::manhattan_distance(int **board, Point *goal, int size) {
+int		manhattan_distance(int **board, Point *goal, int size) {
 	int			result = 0;
 
 	for (int i = 0; i < size; ++i) {
@@ -27,7 +15,7 @@ int		Heuristic::manhattan_distance(int **board, Point *goal, int size) {
 	return (result);
 }
 
-int		Heuristic::hamming_distance(int **board, Point *goal, int size) {
+int		hamming_distance(int **board, Point *goal, int size) {
 	int			result = 0;
 
 	for (int i = 0; i < size; ++i) {
@@ -40,7 +28,7 @@ int		Heuristic::hamming_distance(int **board, Point *goal, int size) {
 	return (result);
 }
 
-int		Heuristic::linear_conflict_plus_manhattan_distance(int **board, Point *goal, int size) {
+int		linear_conflict_plus_manhattan_distance(int **board, Point *goal, int size) {
 	int		manhattan_result = 0;
 	int		linear_result = 0;
 
