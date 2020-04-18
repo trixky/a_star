@@ -2,6 +2,7 @@
 #include "goal.hpp"
 #include "open_list.hpp"
 #include "closed_list.hpp"
+#include "heuristics.hpp"
 
 void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list)
 {
@@ -14,11 +15,11 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list)
 }
 
 int		usage() {
-		std::cout << "N_Puzzle usage: n_puzzle [-0; -1; -2] [file]" << std::endl;
-		std::cout << "    -0: Manhattan Distance Heuristic" << std::endl;
-		std::cout << "    -1: Hamming Distance Heuristic" << std::endl;
-		std::cout << "    -2: Linear Conflict and Manhattan Distance Heuristic" << std::endl;
-		return (1);
+	std::cout << "N_Puzzle usage: n_puzzle [-0; -1; -2] [file]" << std::endl;
+	std::cout << "    -0: Manhattan Distance Heuristic" << std::endl;
+	std::cout << "    -1: Hamming Distance Heuristic" << std::endl;
+	std::cout << "    -2: Linear Conflict and Manhattan Distance Heuristic" << std::endl;
+	return (1);
 }
 
 int		main(int args_count, char **args_value) {
@@ -26,7 +27,7 @@ int		main(int args_count, char **args_value) {
 		return (usage());
 	}
 
-	int		heuristic = args_value[1][1] - '0';
+	Heuristic	*hrs = new Heuristic(args_value[1]);
 	Lexer	*lexer = new Lexer(args_value[2]);
 	if (lexer->err == true) {
 		std::cout << "The file is not well formated : Lexer Error" << std::endl;

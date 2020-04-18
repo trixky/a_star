@@ -4,8 +4,16 @@
 #include "main.hpp"
 #include "goal.hpp"
 
-int		manhattan_distance(int **board, Point *goal, int size);
-int		hamming_distance(int **board, Point *goal, int size);
-int		linear_conflict_plus_manhattan_distance(int **board, Point *goal, int size);
+class Heuristic {
+	public:
+		int (Heuristic::*heuristic)(int **, Point *, int);
+
+		Heuristic(char *arg);
+	private:
+		int		manhattan_distance(int **board, Point *goal, int size);
+		int		hamming_distance(int **board, Point *goal, int size);
+		int		linear_conflict_plus_manhattan_distance(int **board, Point *goal, int size);
+
+};
 
 #endif
