@@ -369,10 +369,6 @@ Board *Board::move_up()
 		return (nullptr);
 	}
 
-	std::cout << "AVANT AVANT AVANT up:" << std::endl;
-	std::cout << "AVANT y [" << this->y_empty_case << "] x [" << this->x_empty_case << "]" << std::endl;
-	this->show();
-
 	Board	*board_cpy = new Board(this);
 	int		temp_case;
 
@@ -385,12 +381,6 @@ Board *Board::move_up()
 	board_cpy->set_last_move(UP);
 	board_cpy->g_cost++;
 
-	std::cout << "APRES APRES APRES up:" << std::endl;
-	std::cout << "y [" << board_cpy->y_empty_case << "] x [" << board_cpy->x_empty_case << "]" << std::endl;
-	board_cpy->show();
-
-	std::cout << "\n\n\n" << std::endl;
-
 	return (board_cpy);
 }
 
@@ -400,10 +390,6 @@ Board *Board::move_down()
 	if (this->last_move == UP || this->y_empty_case == this->size - 1) {
 		return (nullptr);
 	}
-
-	std::cout << "AVANT AVANT AVANT down:" << std::endl;
-	std::cout << "AVANT y [" << this->y_empty_case << "] x [" << this->x_empty_case << "]" << std::endl;
-	this->show();
 
 	Board	*board_cpy = new Board(this);
 	int		temp_case;
@@ -418,12 +404,6 @@ Board *Board::move_down()
 	board_cpy->set_last_move(DOWN);
 	board_cpy->g_cost++;
 
-	std::cout << "APRES APRES APRES down:" << std::endl;
-	std::cout << "y [" << board_cpy->y_empty_case << "] x [" << board_cpy->x_empty_case << "]" << std::endl;
-	board_cpy->show();
-
-	std::cout << "\n\n\n" << std::endl;
-
 	return (board_cpy);
 }
 
@@ -433,10 +413,6 @@ Board *Board::move_right()
 	if (this->last_move == LEFT || this->x_empty_case == this->size - 1) {
 		return (nullptr);
 	}
-
-	std::cout << "AVANT AVANT AVANT right:" << std::endl;
-	std::cout << "AVANT y [" << this->y_empty_case << "] x [" << this->x_empty_case << "]" << std::endl;
-	this->show();
 
 	Board	*board_cpy = new Board(this);
 	int		temp_case;
@@ -450,12 +426,6 @@ Board *Board::move_right()
 	board_cpy->set_last_move(RIGHT);
 	board_cpy->g_cost++;
 
-	std::cout << "APRES APRES APRES right:" << std::endl;
-	std::cout << "y [" << board_cpy->y_empty_case << "] x [" << board_cpy->x_empty_case << "]" << std::endl;
-	board_cpy->show();
-
-	std::cout << "\n\n\n" << std::endl;
-
 	return (board_cpy);
 }
 
@@ -465,10 +435,6 @@ Board *Board::move_left()
 	if (this->last_move == RIGHT || this->x_empty_case == 0) {
 		return (nullptr);
 	}
-
-	std::cout << "AVANT AVANT AVANT left:" << std::endl;
-	std::cout << "AVANT y [" << this->y_empty_case << "] x [" << this->x_empty_case << "]" << std::endl;
-	this->show();
 
 	Board	*board_cpy = new Board(this);
 	int		temp_case;
@@ -481,12 +447,6 @@ Board *Board::move_left()
 	board_cpy->refresh_hash();
 	board_cpy->set_last_move(LEFT);
 	board_cpy->g_cost++;
-
-	std::cout << "APRES APRES APRES left:" << std::endl;
-	std::cout << "y [" << board_cpy->y_empty_case << "] x [" << board_cpy->x_empty_case << "]" << std::endl;
-	board_cpy->show();
-
-	std::cout << "\n\n\n" << std::endl;
 
 	return (board_cpy);
 }

@@ -10,10 +10,6 @@ void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &clo
 		child->set_h_cost(hrs(child->get_board(), goal->pos, child->get_size()));
 		if (!close_list.already_exist(child)) {
 			open_list.push(child);
-			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ on push le child" << std::endl;
-		}
-		else {
-			std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ on push pas le child" << std::endl;
 		}
 	}
 }
@@ -21,53 +17,24 @@ void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &clo
 void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
 	Board *child[4];
-	int		best_h_cost(1000);
 
 	open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
 	while (!open_list.empty()) {
-		// usleep(100000);
-		if (open_list.top()->get_h_cost() < best_h_cost) {
-			best_h_cost = open_list.top()->get_h_cost();
-		}
-		if (best_h_cost == 0)
+		if (open_list.top()->get_h_cost() == 0)
 			break;
-		std::cout << "\n||||||||||||||||||||||||||||||||||||||||||||||||||| DEPART" << std::endl;
-		std::cout << "||||||||||||||||||||||||||||||||||||||||||||||||||| DEPART" << std::endl;
-		std::cout << "||||||||||||||||||||||||||||||||||||||||||||||||||| DEPART" << std::endl;
-		std::cout << "||||||||||||||| best_h_cost = " << best_h_cost << std::endl;
-		std::cout << "||||||||||||||| open_list.size = " << open_list.size() << std::endl;
-		std::cout << "||||||||||||||| close_list.size = " << close_list.size() << std::endl;
-		std::cout << "||||||||||||||| open_list.top()->show()\n" << std::endl;
-		open_list.top()->show();
-		std::cout << "****************************** move_up" << std::endl;
 		child[0] = open_list.top()->move_up();
-		std::cout << "****************************** move_right" << std::endl;
 		child[1] = open_list.top()->move_right();
-		std::cout << "****************************** move_down" << std::endl;
 		child[2] = open_list.top()->move_down();
-		std::cout << "****************************** move_left" << std::endl;
 		child[3] = open_list.top()->move_left();
 
 		close_list.insert(open_list.pop());
 
-		std::cout << "**************************************** CHILD HANDLE UP" << std::endl;
 		child_handle(child[0], goal, open_list, close_list, (*hrs));
-		std::cout << "**************************************** CHILD HANDLE RIGHT" << std::endl;
 		child_handle(child[1], goal, open_list, close_list, (*hrs));
-		std::cout << "**************************************** CHILD HANDLE DOWN" << std::endl;
 		child_handle(child[2], goal, open_list, close_list, (*hrs));
-		std::cout << "**************************************** CHILD HANDLE LEFT" << std::endl;
 		child_handle(child[3], goal, open_list, close_list, (*hrs));
-
-		std::cout << "**************************************** INSERT" << std::endl;
-
 	}
-	std::cout << "\n\n\n**************************************** ON SORT DE WHILE\n\n\n" << std::endl;
-	std::cout << open_list.top()->is_success(goal->pos) << std::endl;
 	open_list.top()->show();
-	if (open_list.empty()) {
-		std::cout << "open list vide !" << std::endl;
-	}
 }
 
 int		usage() {
