@@ -64,11 +64,23 @@ int		usage() {
 }
 
 int		main(int args_count, char **args_value) {
-	if (args_count != 4 || (strcmp(args_value[1], "-0") && strcmp(args_value[1], "-1") && strcmp(args_value[1], "-2")) || (strcmp(args_value[2], "-g") && strcmp(args_value[2], "-u"))) {
+	// Verify the number of arguments.
+	if (args_count != 4) {
 		return (usage());
 	}
 
+	// Verify if the heuristic is well chosen and set the pointer to the heuristic.
+	if (strcmp(args_value[1], "-0") && strcmp(args_value[1], "-1") && strcmp(args_value[1], "-2")) {
+		return (usage());
+	}
 	Heuristic	*hrs = new Heuristic(args_value[1]);
+
+	// Verify if the algorithm is well chosen.
+	if (strcmp(args_value[2], "-g") && strcmp(args_value[2], "-u")) {
+		return (usage());
+	}
+
+	// Parsing of the file.
 	Lexer	*lexer = new Lexer(args_value[3]);
 	if (lexer->err == true) {
 		std::cout << "The file is not well formated : Lexer Error" << std::endl;
@@ -82,9 +94,11 @@ int		main(int args_count, char **args_value) {
 		delete board_start;
 		return (1);
 	}
-	board_start->show();
+
+	// Create a the goal as reversed puzzle.
 	Goal	*goal = new Goal(board_start->get_size());
 
+	// Verify if the board is solvable.
 	if (board_start->is_solvable(goal->pos)) {
 		std::cout << "The puzzle is solvable" << std::endl;
 	}
@@ -94,6 +108,8 @@ int		main(int args_count, char **args_value) {
 		delete board_start;
 		return (1);
 	}
+
+	board_start->show();
 
 	OpenList	open_list;
 	ClosedList	close_list;
