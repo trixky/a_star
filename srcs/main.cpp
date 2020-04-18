@@ -4,19 +4,6 @@
 #include "closed_list.hpp"
 #include "heuristics.hpp"
 
-int		manhattan_distance_temp(int **board, Point *goal, int size) {
-	int			result = 0;
-
-	for (int i = 0; i < size; ++i) {
-		for (int j = 0; j < size; ++j) {
-			if (board[i][j] && (goal[board[i][j]].x != i || goal[board[i][j]].y != j)) {
-				result += abs(i - goal[board[i][j]].x) + abs(j - goal[board[i][j]].y);
-			}
-		}
-	}
-	return (result);
-}
-
 void	child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
 	if (child != nullptr) {
