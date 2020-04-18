@@ -3,9 +3,11 @@
 #include "open_list.hpp"
 #include "closed_list.hpp"
 
-void	algo_a_star(Board *board_start, OpenList &openlist, ClosedList &close_list)
+void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list)
 {
-
+	while (!open_list.empty() && !open_list.top()->is_success(goal->pos)) {
+		break;
+	}
 }
 
 int main(int args_count, char **args_value) {
@@ -38,8 +40,12 @@ int main(int args_count, char **args_value) {
 		return (1);
 	}
 
-	OpenList	openlist;
+	OpenList	open_list;
 	ClosedList	close_list;
+	
+	open_list.push(board_start);
+
+	algo_a_star(goal, open_list, close_list);
 
 	return (0);
 }

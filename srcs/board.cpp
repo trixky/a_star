@@ -7,6 +7,7 @@ Board::Board(Lexer *lexer)
 		this->find_my_empty_case();
 		this->refresh_hash();
 		this->set_last_move(HERE);
+		this->parent_board = nullptr;
 	}
 }
 

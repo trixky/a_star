@@ -26,3 +26,8 @@ void    OpenList::pop()
 {
     this->queue.pop();
 }
+
+bool	OpenList::empty() const
+{
+	return (this->queue.empty());
+}

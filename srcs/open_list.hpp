@@ -25,6 +25,7 @@ class OpenList
         void    push(Board *board);
         void    pop();
         Board    *top();
+		bool	empty() const;
 };
 
 #endif
