@@ -23,8 +23,8 @@ class OpenList
         ~OpenList();
 
         void    push(Board *board);
-        void    pop();
-        Board    *top();
+        Board	*pop();
+        Board	*top();
 		bool	empty() const;
 };
 

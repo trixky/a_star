@@ -22,9 +22,13 @@ Board    *OpenList::top()
     return (this->queue.top());
 }
 
-void    OpenList::pop()
+Board    *OpenList::pop()
 {
+	Board    *top_board = this->queue.top();
+
     this->queue.pop();
+
+	return (top_board);
 }
 
 bool	OpenList::empty() const

@@ -356,7 +356,7 @@ void	Board::refresh_hash()
 // ====== UP
 Board *Board::move_up()
 {
-	if (this->y_empty_case == 0) {
+	if (this->last_move == DOWN || this->y_empty_case == 0) {
 		return (nullptr);
 	}
 
@@ -370,6 +370,7 @@ Board *Board::move_up()
 	board_cpy->y_empty_case--;
 	board_cpy->refresh_hash();
 	this->set_last_move(UP);
+	this->g_cost++;
 
 	return (board_cpy);
 }
@@ -377,7 +378,7 @@ Board *Board::move_up()
 // ====== DOWN
 Board *Board::move_down()
 {
-	if (this->y_empty_case == this->size - 1) {
+	if (this->last_move == UP || this->y_empty_case == this->size - 1) {
 		return (nullptr);
 	}
 
@@ -391,6 +392,7 @@ Board *Board::move_down()
 	board_cpy->y_empty_case++;
 	board_cpy->refresh_hash();
 	this->set_last_move(DOWN);
+	this->g_cost++;
 
 	return (board_cpy);
 }
@@ -398,7 +400,7 @@ Board *Board::move_down()
 // ====== RIGHT
 Board *Board::move_right()
 {
-	if (this->x_empty_case == this->size - 1) {
+	if (this->last_move == LEFT || this->x_empty_case == this->size - 1) {
 		return (nullptr);
 	}
 
@@ -412,6 +414,7 @@ Board *Board::move_right()
 	board_cpy->x_empty_case++;
 	board_cpy->refresh_hash();
 	this->set_last_move(RIGHT);
+	this->g_cost++;
 
 	return (board_cpy);
 }
@@ -419,7 +422,7 @@ Board *Board::move_right()
 // ====== LEFT
 Board *Board::move_left()
 {
-	if (this->x_empty_case == 0) {
+	if (this->last_move == RIGHT || this->x_empty_case == 0) {
 		return (nullptr);
 	}
 
@@ -433,6 +436,7 @@ Board *Board::move_left()
 	board_cpy->x_empty_case--;
 	board_cpy->refresh_hash();
 	this->set_last_move(LEFT);
+	this->g_cost++;
 
 	return (board_cpy);
 }

@@ -6,8 +6,45 @@
 
 void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list)
 {
+	Board *temp_board;
+
 	while (!open_list.empty()) {
-		break;
+
+		temp_board = open_list.top()->move_up();
+		if (temp_board != nullptr) {
+			temp_board->set_h_cost(333);
+			if (!close_list.already_exist(temp_board)) {
+				open_list.push(temp_board);
+			}
+		}
+
+		temp_board = open_list.top()->move_right();
+		if (temp_board != nullptr) {
+			temp_board->set_h_cost(333);
+			if (!close_list.already_exist(temp_board)) {
+				open_list.push(temp_board);
+			}
+		}
+
+		temp_board = open_list.top()->move_down();
+		if (temp_board != nullptr) {
+			temp_board->set_h_cost(333);
+			if (!close_list.already_exist(temp_board)) {
+				open_list.push(temp_board);
+			}
+		}
+
+		temp_board = open_list.top()->move_left();
+		if (temp_board != nullptr) {
+			temp_board->set_h_cost(333);
+			if (!close_list.already_exist(temp_board)) {
+				open_list.push(temp_board);
+			}
+		}
+
+
+		close_list.insert(open_list.pop());
+		open_list.pop();
 	}
 	if (!open_list.empty()) {
 		std::cout << "open list vide !" << std::endl;
