@@ -5,8 +5,11 @@
 
 void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list)
 {
-	while (!open_list.empty() && !open_list.top()->is_success(goal->pos)) {
+	while (!open_list.empty()) {
 		break;
+	}
+	if (!open_list.empty()) {
+		std::cout << "open list vide !" << std::endl;
 	}
 }
 
