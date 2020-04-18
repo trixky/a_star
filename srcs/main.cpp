@@ -19,9 +19,7 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*
 	Board *child[4];
 
 	open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
-	while (!open_list.empty()) {
-		if (open_list.top()->get_h_cost() == 0)
-			break;
+	while (!open_list.empty() && open_list.top()->get_h_cost() != 0) {
 		child[0] = open_list.top()->move_up();
 		child[1] = open_list.top()->move_right();
 		child[2] = open_list.top()->move_down();
