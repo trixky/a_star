@@ -4,7 +4,7 @@ ClosedList::ClosedList(){}
 
 ClosedList::~ClosedList()
 {
-    this->map.clear();
+    // this->map.clear();
 }
 
 

@@ -80,11 +80,6 @@ int		main(int args_count, char **args_value) {
 		return (usage());
 	}
 
-	// Verify if the algorithm is well chosen.
-	if (strcmp(args_value[2], "-g") && strcmp(args_value[2], "-u")) {
-		return (usage());
-	}
-
 	// Parsing of the file.
 	Lexer	*lexer = new Lexer(args_value[3]);
 	if (lexer->err == true) {
