@@ -7,9 +7,7 @@ OpenList::OpenList()
 
 OpenList::~OpenList()
 {
-    while (!this->queue.empty()) {
-        this->queue.pop();
-    }
+
 }
 
 void    OpenList::push(Board *board)

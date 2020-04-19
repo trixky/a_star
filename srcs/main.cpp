@@ -4,6 +4,20 @@
 #include "closed_list.hpp"
 #include "heuristics.hpp"
 
+void	clear_board_vector(std::vector<Board *>	&board_vector)
+{
+	std::vector<Board *>::iterator	it(board_vector.begin());
+	std::vector<Board *>::iterator	it_end(board_vector.end());
+
+	for (;it != it_end; ++it)
+	{
+		if (*it != nullptr) {
+			delete (*it);
+			*it = nullptr;
+		}
+	}
+}
+
 int		show_ride_up(Board *board)
 {
 	int		move = 0;
@@ -31,18 +45,21 @@ int		child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &clo
 
 void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
-	Board	*child[4];
-	int		time_complexity = 0;
-	int		memory_complexity = 0;
-	int		nbr_of_moves;
+	Board					*child[4];
+	std::vector<Board *>	board_vector;
+	int						time_complexity = 0;
+	int						memory_complexity = 0;
+	int						nbr_of_moves;
+
 
 	open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
+	board_vector.push_back(open_list.top());
 	while (!open_list.empty() && open_list.top()->get_h_cost() != 0) {
 		time_complexity++;
-		child[0] = open_list.top()->move_up();
-		child[1] = open_list.top()->move_right();
-		child[2] = open_list.top()->move_down();
-		child[3] = open_list.top()->move_left();
+		board_vector.push_back((child[0] = open_list.top()->move_up()));
+		board_vector.push_back((child[1] = open_list.top()->move_right()));
+		board_vector.push_back((child[2] = open_list.top()->move_down()));
+		board_vector.push_back((child[3] = open_list.top()->move_left()));
 
 		close_list.insert(open_list.pop());
 
@@ -55,6 +72,9 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*
 	std::cout << "Complexity in time : [ " << time_complexity << " ]" << std::endl;
 	std::cout << "Complexity in memory : [ " << memory_complexity << " ]" << std::endl;
 	std::cout << "Number of moves from initial state : [ " << nbr_of_moves << " ]" << std::endl;
+	std::cout << "board_vector size = " << board_vector.size() << std::endl;
+	clear_board_vector(board_vector);
+
 }
 
 int		usage() {
@@ -70,6 +90,7 @@ int		usage() {
 }
 
 int		main(int args_count, char **args_value) {
+
 	// Verify the number of arguments.
 	if (args_count != 4) {
 		return (usage());
@@ -127,7 +148,8 @@ int		main(int args_count, char **args_value) {
 	open_list.push(board_start);
 
 	algo_a_star(goal, open_list, close_list, (*hrs));
+
 	delete goal;
-	delete board_start;
+	
 	return (0);
 }

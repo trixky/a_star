@@ -27,7 +27,6 @@ Board::Board(Board *clone)
 
 	for (int i = 0; i < size; ++i)
 	{
-		board[i] = new int[size];
 		for (int j = 0; j < size; ++j)
 		{
 			board[i][j] = clone->board[i][j];
@@ -37,14 +36,20 @@ Board::Board(Board *clone)
 
 Board::~Board()
 {
-	if (board)
+	if (this->board)
 	{
+		// std::cout << "kill a board" << std::endl;
 		for (int i = 0; i < size; ++i)
 		{
-			delete []board[i];
+			delete []this->board[i];
 		}
-		delete []board;
+		delete []this->board;
+		this->board = nullptr;
 	}
+	else {
+		std::cout << "kill a null" << std::endl;
+	}
+	// std::cout << "end kill a board" << std::endl;
 }
 
 
@@ -65,7 +70,7 @@ bool Board::verif_number_size(int number, int power)
 
 void Board::init_board()
 {
-	board = new int *[size];
+	this->board = new int *[size];
 	for (int i = 0; i < size; ++i)
 	{
 		board[i] = new int[size];

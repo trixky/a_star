@@ -20,6 +20,7 @@ bool    ClosedList::already_exist(Board *open_list_board)
         if (it->second->get_f_cost() < open_list_board->get_f_cost()) {
             return (true);
         }
+		// delete it->second;
         this->map.erase(it);
     }
     return (false);

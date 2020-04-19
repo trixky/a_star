@@ -22,6 +22,7 @@ class OpenList
         OpenList();
         ~OpenList();
 
+
         void    push(Board *board);
         Board	*pop();
         Board	*top();
