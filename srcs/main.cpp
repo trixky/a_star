@@ -23,10 +23,10 @@ int show_ride_up(Board *board)
 {
 	int move = 0;
 
-	while (board->get_parent_board() != nullptr)
+	if (board->get_parent_board() != nullptr)
 	{
+		move = show_ride_up(board->get_parent_board());
 		board->show();
-		board = board->get_parent_board();
 		move++;
 	}
 	return (move);
