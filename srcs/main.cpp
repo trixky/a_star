@@ -32,11 +32,12 @@ int show_ride_up(Board *board)
 	return (move);
 }
 
-int child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
+int child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int), int algo_type)
 {
 	if (child != nullptr)
 	{
-		child->set_h_cost(hrs(child->get_board(), goal->pos, child->get_size()));
+		if (algo_type != UNIFORM)
+			child->set_h_cost(hrs(child->get_board(), goal->pos, child->get_size()));
 		if (!close_list.already_exist(child))
 		{
 			open_list.push(child);
@@ -44,6 +45,17 @@ int child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &clos
 		}
 	}
 	return (0);
+}
+
+bool		resolved(int **board, Point *goal, int size) {
+	for (int i = 0; i < size; ++i) {
+		for (int j = 0; j < size; ++j) {
+			if (board[i][j] && (goal[board[i][j]].x != i || goal[board[i][j]].y != j)) {
+				return (false);
+			}
+		}
+	}
+	return (true);
 }
 
 void algo(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int), int algo_type)
@@ -54,9 +66,10 @@ void algo(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(in
 	int memory_complexity = 0;
 	int nbr_of_moves;
 
-	open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
+	if (algo_type != UNIFORM)
+		open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
 	board_vector.push_back(open_list.top());
-	while (!open_list.empty() && open_list.top()->get_h_cost() != 0)
+	while (!open_list.empty() && ((algo_type != UNIFORM && open_list.top()->get_h_cost() != 0) || !resolved(open_list.top()->get_board(), goal->pos, open_list.top()->get_size())))
 	{
 		time_complexity++;
 		board_vector.push_back((child[0] = open_list.top()->move_up(algo_type)));
@@ -66,10 +79,10 @@ void algo(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(in
 
 		close_list.insert(open_list.pop());
 
-		memory_complexity += child_handle(child[0], goal, open_list, close_list, (*hrs));
-		memory_complexity += child_handle(child[1], goal, open_list, close_list, (*hrs));
-		memory_complexity += child_handle(child[2], goal, open_list, close_list, (*hrs));
-		memory_complexity += child_handle(child[3], goal, open_list, close_list, (*hrs));
+		memory_complexity += child_handle(child[0], goal, open_list, close_list, (*hrs), algo_type);
+		memory_complexity += child_handle(child[1], goal, open_list, close_list, (*hrs), algo_type);
+		memory_complexity += child_handle(child[2], goal, open_list, close_list, (*hrs), algo_type);
+		memory_complexity += child_handle(child[3], goal, open_list, close_list, (*hrs), algo_type);
 	}
 	nbr_of_moves = show_ride_up(open_list.top());
 	std::cout << "Complexity in time : [ " << time_complexity << " ]" << std::endl;
@@ -125,6 +138,21 @@ int main(int args_count, char **args_value)
 		return (1);
 	}
 
+	// Create the pointer for the heuristic.
+	int algo_type;
+	if (args_value[2][1] == 'a')
+	{
+		algo_type = A_STAR;
+	}
+	else if (args_value[2][1] == 'g')
+	{
+		algo_type = GREADY;
+	}
+	else
+	{
+		algo_type = UNIFORM;
+	}
+
 	// Create a the goal as reversed puzzle.
 	Goal *goal = new Goal(board_start->get_size());
 
@@ -143,20 +171,6 @@ int main(int args_count, char **args_value)
 		hrs = &linear_conflict_plus_manhattan_distance;
 	}
 
-	// Create the pointer for the heuristic.
-	int algo_type;
-	if (args_value[2][1] == 'a')
-	{
-		algo_type = A_STAR;
-	}
-	else if (args_value[2][1] == 'g')
-	{
-		algo_type = GREADY;
-	}
-	else
-	{
-		algo_type = UNIFORM;
-	}
 
 	// Verify if the board is solvable.
 	if (board_start->is_solvable(goal->pos))

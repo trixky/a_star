@@ -10,6 +10,7 @@ Board::Board(Lexer *lexer)
 		this->set_last_move(HERE);
 		this->parent_board = nullptr;
 		this->g_cost = 0;
+		this->h_cost = 0;
 	}
 }
 
