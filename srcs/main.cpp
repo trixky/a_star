@@ -19,14 +19,17 @@ void clear_board_vector(std::vector<Board *> &board_vector)
 	}
 }
 
-int show_ride_up(Board *board)
+int show_ride_up(Board *board, bool show)
 {
 	int move = 0;
 
 	if (board->get_parent_board() != nullptr)
 	{
-		move = show_ride_up(board->get_parent_board());
-		board->show();
+		move = show_ride_up(board->get_parent_board(), show);
+		if (show)
+		{
+			board->show();
+		}
 		move++;
 	}
 	return (move);
@@ -47,10 +50,14 @@ int child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &clos
 	return (0);
 }
 
-bool		resolved(int **board, Point *goal, int size) {
-	for (int i = 0; i < size; ++i) {
-		for (int j = 0; j < size; ++j) {
-			if (board[i][j] && (goal[board[i][j]].x != i || goal[board[i][j]].y != j)) {
+bool resolved(int **board, Point *goal, int size)
+{
+	for (int i = 0; i < size; ++i)
+	{
+		for (int j = 0; j < size; ++j)
+		{
+			if (board[i][j] && (goal[board[i][j]].x != i || goal[board[i][j]].y != j))
+			{
 				return (false);
 			}
 		}
@@ -69,6 +76,7 @@ void algo(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(in
 	if (algo_type != UNIFORM)
 		open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
 	board_vector.push_back(open_list.top());
+	int size;
 	while (!open_list.empty() && ((algo_type != UNIFORM && open_list.top()->get_h_cost() != 0) || !resolved(open_list.top()->get_board(), goal->pos, open_list.top()->get_size())))
 	{
 		time_complexity++;
@@ -84,11 +92,10 @@ void algo(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(in
 		memory_complexity += child_handle(child[2], goal, open_list, close_list, (*hrs), algo_type);
 		memory_complexity += child_handle(child[3], goal, open_list, close_list, (*hrs), algo_type);
 	}
-	nbr_of_moves = show_ride_up(open_list.top());
+	nbr_of_moves = show_ride_up(open_list.top(), true);
 	std::cout << "Complexity in time : [ " << time_complexity << " ]" << std::endl;
 	std::cout << "Complexity in memory : [ " << memory_complexity << " ]" << std::endl;
 	std::cout << "Number of moves from initial state : [ " << nbr_of_moves << " ]" << std::endl;
-	std::cout << "board_vector size = " << board_vector.size() << std::endl;
 	clear_board_vector(board_vector);
 }
 
@@ -118,8 +125,6 @@ int main(int args_count, char **args_value)
 	{
 		return (usage());
 	}
-
-	std::cout << "youpilop 2" << std::endl;
 
 	// Parsing of the file.
 	Lexer *lexer = new Lexer(args_value[3]);
@@ -170,7 +175,6 @@ int main(int args_count, char **args_value)
 	{
 		hrs = &linear_conflict_plus_manhattan_distance;
 	}
-
 
 	// Verify if the board is solvable.
 	if (board_start->is_solvable(goal->pos))

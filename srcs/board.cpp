@@ -40,7 +40,6 @@ Board::~Board()
 {
 	if (this->board)
 	{
-		// std::cout << "kill a board" << std::endl;
 		for (int i = 0; i < size; ++i)
 		{
 			delete[] this->board[i];
@@ -48,11 +47,6 @@ Board::~Board()
 		delete[] this->board;
 		this->board = nullptr;
 	}
-	else
-	{
-		std::cout << "kill a null" << std::endl;
-	}
-	// std::cout << "end kill a board" << std::endl;
 }
 
 bool Board::verif_number_size(int number, int power)
@@ -124,7 +118,6 @@ bool Board::parse_file(Lexer *lexer)
 	{
 		return (true);
 	}
-	std::cout << "The size of the board is : " << size << std::endl;
 	characters = test - &lexer->buffer[i];
 	if (verif_number_size(size, characters))
 	{
@@ -390,12 +383,15 @@ void Board::set_last_move(int move)
 
 void Board::refresh_hash()
 {
+	char ccc;
+	std::string test;
+
 	this->hash.clear();
 	for (int y(0); y < this->size; y++)
 	{
 		for (int x(0); x < this->size; x++)
 		{
-			this->hash += this->board[y][x];
+			this->hash += this->board[y][x] + 48;
 		}
 	}
 }
