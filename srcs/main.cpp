@@ -151,7 +151,7 @@ int main(int args_count, char **args_value)
 	}
 	else if (args_value[2][1] == 'g')
 	{
-		algo_type = GREADY;
+		algo_type = GREEDY;
 	}
 	else
 	{
