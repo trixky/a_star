@@ -418,7 +418,7 @@ Board *Board::move_up(int algo_type)
 	board_cpy->y_empty_case--;
 	board_cpy->refresh_hash();
 	board_cpy->set_last_move(UP);
-	if (algo_type != GREADY)
+	if (algo_type != GREEDY)
 	{
 		board_cpy->g_cost++;
 	}
@@ -444,7 +444,7 @@ Board *Board::move_down(int algo_type)
 	board_cpy->y_empty_case++;
 	board_cpy->refresh_hash();
 	board_cpy->set_last_move(DOWN);
-	if (algo_type != GREADY)
+	if (algo_type != GREEDY)
 	{
 		board_cpy->g_cost++;
 	}
@@ -470,7 +470,7 @@ Board *Board::move_right(int algo_type)
 	board_cpy->x_empty_case++;
 	board_cpy->refresh_hash();
 	board_cpy->set_last_move(RIGHT);
-	if (algo_type != GREADY)
+	if (algo_type != GREEDY)
 	{
 		board_cpy->g_cost++;
 	}
@@ -496,7 +496,7 @@ Board *Board::move_left(int algo_type)
 	board_cpy->x_empty_case--;
 	board_cpy->refresh_hash();
 	board_cpy->set_last_move(LEFT);
-	if (algo_type != GREADY)
+	if (algo_type != GREEDY)
 	{
 		board_cpy->g_cost++;
 	}

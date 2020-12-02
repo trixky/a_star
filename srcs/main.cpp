@@ -108,7 +108,7 @@ int usage()
 	std::cout << "    -2: Linear Conflict and Manhattan Distance Heuristic." << std::endl;
 	std::cout << "  Algorithm:" << std::endl;
 	std::cout << "    -a: A* (A Star)." << std::endl;
-	std::cout << "    -g: Gready Search." << std::endl;
+	std::cout << "    -g: Greedy Search." << std::endl;
 	std::cout << "    -u: Uniform Cost." << std::endl;
 	return (1);
 }

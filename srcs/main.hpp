@@ -25,7 +25,7 @@
 #define LEFT        4
 
 #define A_STAR      0
-#define GREADY      1
+#define GREEDY      1
 #define UNIFORM     2
 
 #endif
