@@ -51,7 +51,6 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*
 	int						memory_complexity = 0;
 	int						nbr_of_moves;
 
-
 	open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
 	board_vector.push_back(open_list.top());
 	while (!open_list.empty() && open_list.top()->get_h_cost() != 0) {
@@ -74,32 +73,34 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*
 	std::cout << "Number of moves from initial state : [ " << nbr_of_moves << " ]" << std::endl;
 	std::cout << "board_vector size = " << board_vector.size() << std::endl;
 	clear_board_vector(board_vector);
-
 }
 
 int		usage() {
-	std::cout << "N_Puzzle usage: n_puzzle [-0; -1; -2] [-g; -u] [file]" << std::endl;
+	std::cout << "N_Puzzle usage: n_puzzle [-0; -1; -2] [-a; -g; -u] [file]" << std::endl;
 	std::cout << "  Heuristics:" << std::endl;
 	std::cout << "    -0: Manhattan Distance Heuristic." << std::endl;
 	std::cout << "    -1: Hamming Distance Heuristic." << std::endl;
 	std::cout << "    -2: Linear Conflict and Manhattan Distance Heuristic." << std::endl;
 	std::cout << "  Algorithm:" << std::endl;
-	std::cout << "    -g: Gready Search Algorithm." << std::endl;
-	std::cout << "    -u: Uniform Cost Algorithm." << std::endl;
+	std::cout << "    -a: A* (A Star)." << std::endl;
+	std::cout << "    -g: Gready Search." << std::endl;
+	std::cout << "    -u: Uniform Cost." << std::endl;
 	return (1);
 }
 
 int		main(int args_count, char **args_value) {
 
 	// Verify the number of arguments.
-	if (args_count != 4) {
+	// Verify if the heuristic is well chosen.
+	// Verify if the algorithm is well chosen.
+	if (args_count != 4 ||
+		(strcmp(args_value[1], "-0") != 0 && strcmp(args_value[1], "-1") != 0 && strcmp(args_value[1], "-2") != 0) ||
+		(strcmp(args_value[2], "-a") != 0 && strcmp(args_value[2], "-g") != 0 && strcmp(args_value[2], "-u") != 0)) {
 		return (usage());
 	}
 
-	// Verify if the heuristic is well chosen and set the pointer to the heuristic.
-	if (strcmp(args_value[1], "-0") && strcmp(args_value[1], "-1") && strcmp(args_value[1], "-2")) {
-		return (usage());
-	}
+	std::cout << "youpilop 2" << std::endl;
+
 
 	// Parsing of the file.
 	Lexer	*lexer = new Lexer(args_value[3]);
@@ -150,6 +151,6 @@ int		main(int args_count, char **args_value) {
 	algo_a_star(goal, open_list, close_list, (*hrs));
 
 	delete goal;
-	
+
 	return (0);
 }
