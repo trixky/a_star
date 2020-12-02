@@ -12,16 +12,20 @@
 #include <unordered_map>
 #include <unistd.h>
 
-#define START	0
-#define NUMBER	1
-#define HASHTAG	2
-#define ENDLINE	3
-#define SPACE	4
+#define START	    0
+#define NUMBER	    1
+#define HASHTAG	    2
+#define ENDLINE	    3
+#define SPACE	    4
 
-#define HERE    0
-#define UP      1
-#define RIGHT   2
-#define DOWN    3
-#define LEFT    4
+#define HERE        0
+#define UP          1
+#define RIGHT       2
+#define DOWN        3
+#define LEFT        4
+
+#define A_STAR      0
+#define GREADY      1
+#define UNIFORM     2
 
 #endif

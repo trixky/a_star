@@ -4,23 +4,24 @@
 #include "closed_list.hpp"
 #include "heuristics.hpp"
 
-void	clear_board_vector(std::vector<Board *>	&board_vector)
+void clear_board_vector(std::vector<Board *> &board_vector)
 {
-	std::vector<Board *>::iterator	it(board_vector.begin());
-	std::vector<Board *>::iterator	it_end(board_vector.end());
+	std::vector<Board *>::iterator it(board_vector.begin());
+	std::vector<Board *>::iterator it_end(board_vector.end());
 
-	for (;it != it_end; ++it)
+	for (; it != it_end; ++it)
 	{
-		if (*it != nullptr) {
+		if (*it != nullptr)
+		{
 			delete (*it);
 			*it = nullptr;
 		}
 	}
 }
 
-int		show_ride_up(Board *board)
+int show_ride_up(Board *board)
 {
-	int		move = 0;
+	int move = 0;
 
 	while (board->get_parent_board() != nullptr)
 	{
@@ -31,11 +32,13 @@ int		show_ride_up(Board *board)
 	return (move);
 }
 
-int		child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
+int child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
 {
-	if (child != nullptr) {
+	if (child != nullptr)
+	{
 		child->set_h_cost(hrs(child->get_board(), goal->pos, child->get_size()));
-		if (!close_list.already_exist(child)) {
+		if (!close_list.already_exist(child))
+		{
 			open_list.push(child);
 			return (1);
 		}
@@ -43,22 +46,23 @@ int		child_handle(Board *child, Goal *goal, OpenList &open_list, ClosedList &clo
 	return (0);
 }
 
-void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int))
+void algo(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(int **, Point *, int), int algo_type)
 {
-	Board					*child[4];
-	std::vector<Board *>	board_vector;
-	int						time_complexity = 0;
-	int						memory_complexity = 0;
-	int						nbr_of_moves;
+	Board *child[4];
+	std::vector<Board *> board_vector;
+	int time_complexity = 0;
+	int memory_complexity = 0;
+	int nbr_of_moves;
 
 	open_list.top()->set_h_cost(hrs(open_list.top()->get_board(), goal->pos, open_list.top()->get_size()));
 	board_vector.push_back(open_list.top());
-	while (!open_list.empty() && open_list.top()->get_h_cost() != 0) {
+	while (!open_list.empty() && open_list.top()->get_h_cost() != 0)
+	{
 		time_complexity++;
-		board_vector.push_back((child[0] = open_list.top()->move_up()));
-		board_vector.push_back((child[1] = open_list.top()->move_right()));
-		board_vector.push_back((child[2] = open_list.top()->move_down()));
-		board_vector.push_back((child[3] = open_list.top()->move_left()));
+		board_vector.push_back((child[0] = open_list.top()->move_up(algo_type)));
+		board_vector.push_back((child[1] = open_list.top()->move_right(algo_type)));
+		board_vector.push_back((child[2] = open_list.top()->move_down(algo_type)));
+		board_vector.push_back((child[3] = open_list.top()->move_left(algo_type)));
 
 		close_list.insert(open_list.pop());
 
@@ -75,7 +79,8 @@ void	algo_a_star(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*
 	clear_board_vector(board_vector);
 }
 
-int		usage() {
+int usage()
+{
 	std::cout << "N_Puzzle usage: n_puzzle [-0; -1; -2] [-a; -g; -u] [file]" << std::endl;
 	std::cout << "  Heuristics:" << std::endl;
 	std::cout << "    -0: Manhattan Distance Heuristic." << std::endl;
@@ -88,67 +93,90 @@ int		usage() {
 	return (1);
 }
 
-int		main(int args_count, char **args_value) {
+int main(int args_count, char **args_value)
+{
 
 	// Verify the number of arguments.
 	// Verify if the heuristic is well chosen.
 	// Verify if the algorithm is well chosen.
 	if (args_count != 4 ||
 		(strcmp(args_value[1], "-0") != 0 && strcmp(args_value[1], "-1") != 0 && strcmp(args_value[1], "-2") != 0) ||
-		(strcmp(args_value[2], "-a") != 0 && strcmp(args_value[2], "-g") != 0 && strcmp(args_value[2], "-u") != 0)) {
+		(strcmp(args_value[2], "-a") != 0 && strcmp(args_value[2], "-g") != 0 && strcmp(args_value[2], "-u") != 0))
+	{
 		return (usage());
 	}
 
 	std::cout << "youpilop 2" << std::endl;
 
-
 	// Parsing of the file.
-	Lexer	*lexer = new Lexer(args_value[3]);
-	if (lexer->err == true) {
+	Lexer *lexer = new Lexer(args_value[3]);
+	if (lexer->err == true)
+	{
 		std::cout << "The file is not well formated : Lexer Error" << std::endl;
 		delete lexer;
 		return (1);
 	}
-	Board	*board_start = new Board(lexer);
+	Board *board_start = new Board(lexer);
 	delete lexer;
-	if (board_start->get_err() == true) {
+	if (board_start->get_err() == true)
+	{
 		std::cout << "The file is not well formated : Parser Error" << std::endl;
 		delete board_start;
 		return (1);
 	}
 
 	// Create a the goal as reversed puzzle.
-	Goal	*goal = new Goal(board_start->get_size());
+	Goal *goal = new Goal(board_start->get_size());
 
 	// Create the pointer for the heuristic.
-	int		(*hrs)(int **, Point *, int);
-	if (args_value[1][1] == '0') {
+	int (*hrs)(int **, Point *, int);
+	if (args_value[1][1] == '0')
+	{
 		hrs = &manhattan_distance;
 	}
-	else if (args_value[1][1] == '1') {
+	else if (args_value[1][1] == '1')
+	{
 		hrs = &hamming_distance;
 	}
-	else {
+	else
+	{
 		hrs = &linear_conflict_plus_manhattan_distance;
 	}
 
+	// Create the pointer for the heuristic.
+	int algo_type;
+	if (args_value[2][1] == 'a')
+	{
+		algo_type = A_STAR;
+	}
+	else if (args_value[2][1] == 'g')
+	{
+		algo_type = GREADY;
+	}
+	else
+	{
+		algo_type = UNIFORM;
+	}
+
 	// Verify if the board is solvable.
-	if (board_start->is_solvable(goal->pos)) {
+	if (board_start->is_solvable(goal->pos))
+	{
 		std::cout << "The puzzle is solvable" << std::endl;
 	}
-	else {
+	else
+	{
 		std::cout << "The puzzle is not solvable" << std::endl;
 		delete goal;
 		delete board_start;
 		return (1);
 	}
 
-	OpenList	open_list;
-	ClosedList	close_list;
+	OpenList open_list;
+	ClosedList close_list;
 
 	open_list.push(board_start);
 
-	algo_a_star(goal, open_list, close_list, (*hrs));
+	algo(goal, open_list, close_list, (*hrs), algo_type);
 
 	delete goal;
 

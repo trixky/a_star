@@ -3,7 +3,8 @@
 
 Board::Board(Lexer *lexer)
 {
-	if (!(err = parse_file(lexer))) {
+	if (!(err = parse_file(lexer)))
+	{
 		this->find_my_empty_case();
 		this->refresh_hash();
 		this->set_last_move(HERE);
@@ -41,18 +42,17 @@ Board::~Board()
 		// std::cout << "kill a board" << std::endl;
 		for (int i = 0; i < size; ++i)
 		{
-			delete []this->board[i];
+			delete[] this->board[i];
 		}
-		delete []this->board;
+		delete[] this->board;
 		this->board = nullptr;
 	}
-	else {
+	else
+	{
 		std::cout << "kill a null" << std::endl;
 	}
 	// std::cout << "end kill a board" << std::endl;
 }
-
-
 
 bool Board::verif_number_size(int number, int power)
 {
@@ -202,69 +202,84 @@ bool Board::parse_file(Lexer *lexer)
 	return (false);
 }
 
-bool Board::is_solvable(Point *pos) {
-	int	*goal = new int[size_square];
+bool Board::is_solvable(Point *pos)
+{
+	int *goal = new int[size_square];
 	int *board_1d = new int[size_square];
-	int	index = 0;
+	int index = 0;
 	int transversion = 0;
 	int even_odd = (std::abs(pos[0].x - x_empty_case) + std::abs(pos[0].y - y_empty_case)) % 2;
 
-	for (int i = 0; i < size; ++i) {
-		for (int j = 0; j < size; ++j) {
+	for (int i = 0; i < size; ++i)
+	{
+		for (int j = 0; j < size; ++j)
+		{
 			board_1d[index++] = board[i][j];
 		}
 	}
-	for (int i = 0; i < size_square; ++i) {
+	for (int i = 0; i < size_square; ++i)
+	{
 		goal[pos[i].x * size + pos[i].y] = i;
 	}
-	for (int i = 0; i < size_square; ++i) {
-		for (int j = i + 1; j < size_square; ++j) {
-			if (goal[board_1d[i]] > goal[board_1d[j]]) {
+	for (int i = 0; i < size_square; ++i)
+	{
+		for (int j = i + 1; j < size_square; ++j)
+		{
+			if (goal[board_1d[i]] > goal[board_1d[j]])
+			{
 				transversion++;
 			}
 		}
 	}
 	transversion %= 2;
-	delete []goal;
-	delete []board_1d;
-	if (transversion - even_odd) {
+	delete[] goal;
+	delete[] board_1d;
+	if (transversion - even_odd)
+	{
 		return (false);
 	}
 	return (true);
 }
 
-bool	Board::is_success(Point *goal) {
-	for (int i = 0; i < size_square; ++i) {
-		if (i != board[goal[i].x][goal[i].y]) {
+bool Board::is_success(Point *goal)
+{
+	for (int i = 0; i < size_square; ++i)
+	{
+		if (i != board[goal[i].x][goal[i].y])
+		{
 			return (false);
 		}
 	}
 	return (true);
 }
 
-void	Board::show() const
+void Board::show() const
 {
 	for (int y(0); y < this->size; y++)
 	{
 		std::cout << "|\t";
 		for (int x(0); x < this->size; x++)
 		{
-			if (this->board[y][x] != 0) {
+			if (this->board[y][x] != 0)
+			{
 				std::cout << this->board[y][x];
 			}
-			else {
+			else
+			{
 				std::cout << '~';
 			}
 			std::cout << '\t';
 		}
 		std::cout << "|" << std::endl;
 	}
-	std::cout << "\n" << std::endl;
+	std::cout << "\n"
+			  << std::endl;
 }
 
-void	Board::show_more() const
+void Board::show_more() const
 {
-	for (int i(0); i < this->size; i++) {
+	for (int i(0); i < this->size; i++)
+	{
 		std::cout << "\\\\\\\\\\\\\\\\";
 	}
 	std::cout << " show start :" << std::endl;
@@ -276,99 +291,103 @@ void	Board::show_more() const
 		for (int x(0); x < this->size; x++)
 		{
 			std::cout << "   ";
-			if (this->board[y][x] != 0) {
+			if (this->board[y][x] != 0)
+			{
 				std::cout << this->board[y][x];
 			}
-			else {
+			else
+			{
 				std::cout << '~';
 			}
 			std::cout << '\t';
 		}
 	}
-	for (int i(0); i < this->size; i++) {
+	for (int i(0); i < this->size; i++)
+	{
 		std::cout << "////////";
 	}
 	std::cout << " show end." << std::endl;
-	std::cout << "\n" << std::endl;
+	std::cout << "\n"
+			  << std::endl;
 }
 
-void	Board::find_my_empty_case()
+void Board::find_my_empty_case()
 {
 	for (int y(0); y < this->size; y++)
 	{
 		for (int x(0); x < this->size; x++)
 		{
-			if (this->board[y][x] == 0) {
+			if (this->board[y][x] == 0)
+			{
 				this->x_empty_case = x;
 				this->y_empty_case = y;
-				return ;
+				return;
 			}
 		}
 	}
 }
 
-Board   *Board::get_parent_board()
+Board *Board::get_parent_board()
 {
-    return (this->parent_board);
+	return (this->parent_board);
 }
 
-std::string     Board::get_hash() const
+std::string Board::get_hash() const
 {
 	return (this->hash);
 }
 
-bool	Board::get_err()
+bool Board::get_err()
 {
-	return(this->err);
+	return (this->err);
 }
 
-int		Board::get_size()
+int Board::get_size()
 {
-	return(this->size);
+	return (this->size);
 }
 
-int 	Board::get_g_cost() const
+int Board::get_g_cost() const
 {
-    return (this->g_cost);
+	return (this->g_cost);
 }
 
-int 	Board::get_h_cost() const
+int Board::get_h_cost() const
 {
-    return (this->h_cost);
+	return (this->h_cost);
 }
 
-int 	Board::get_f_cost() const
+int Board::get_f_cost() const
 {
-    return (this->g_cost + this->h_cost);
+	return (this->g_cost + this->h_cost);
 }
 
-int		Board::get_last_move() const
+int Board::get_last_move() const
 {
-    return (this->last_move);
+	return (this->last_move);
 }
 
-int				**Board::get_board() const
+int **Board::get_board() const
 {
 	return (this->board);
 }
 
-void 	Board::set_g_cost(int cost)
+void Board::set_g_cost(int cost)
 {
-    this->g_cost = cost;
+	this->g_cost = cost;
 }
 
-void	Board::set_h_cost(int cost)
+void Board::set_h_cost(int cost)
 {
-    this->h_cost = cost;
+	this->h_cost = cost;
 }
 
-void	Board::set_last_move(int move)
+void Board::set_last_move(int move)
 {
-    this->last_move = move;
+	this->last_move = move;
 }
 
-
-void	Board::refresh_hash()
+void Board::refresh_hash()
 {
 	this->hash.clear();
 	for (int y(0); y < this->size; y++)
@@ -380,20 +399,20 @@ void	Board::refresh_hash()
 	}
 }
 
-
 // ==================================================== MOVE
 // ================
 // ======
 
 // ====== UP
-Board *Board::move_up()
+Board *Board::move_up(int algo_type)
 {
-	if (this->last_move == DOWN || this->y_empty_case == 0) {
+	if (this->last_move == DOWN || this->y_empty_case == 0)
+	{
 		return (nullptr);
 	}
 
-	Board	*board_cpy = new Board(this);
-	int		temp_case;
+	Board *board_cpy = new Board(this);
+	int temp_case;
 
 	temp_case = board_cpy->board[board_cpy->y_empty_case - 1][board_cpy->x_empty_case];
 	board_cpy->board[board_cpy->y_empty_case - 1][board_cpy->x_empty_case] = 0;
@@ -402,21 +421,24 @@ Board *Board::move_up()
 	board_cpy->y_empty_case--;
 	board_cpy->refresh_hash();
 	board_cpy->set_last_move(UP);
-	board_cpy->g_cost++;
+	if (algo_type != GREADY)
+	{
+		board_cpy->g_cost++;
+	}
 
 	return (board_cpy);
 }
 
 // ====== DOWN
-Board *Board::move_down()
+Board *Board::move_down(int algo_type)
 {
-	if (this->last_move == UP || this->y_empty_case == this->size - 1) {
+	if (this->last_move == UP || this->y_empty_case == this->size - 1)
+	{
 		return (nullptr);
 	}
 
-	Board	*board_cpy = new Board(this);
-	int		temp_case;
-
+	Board *board_cpy = new Board(this);
+	int temp_case;
 
 	temp_case = board_cpy->board[board_cpy->y_empty_case + 1][board_cpy->x_empty_case];
 	board_cpy->board[board_cpy->y_empty_case + 1][board_cpy->x_empty_case] = 0;
@@ -425,20 +447,24 @@ Board *Board::move_down()
 	board_cpy->y_empty_case++;
 	board_cpy->refresh_hash();
 	board_cpy->set_last_move(DOWN);
-	board_cpy->g_cost++;
+	if (algo_type != GREADY)
+	{
+		board_cpy->g_cost++;
+	}
 
 	return (board_cpy);
 }
 
 // ====== RIGHT
-Board *Board::move_right()
+Board *Board::move_right(int algo_type)
 {
-	if (this->last_move == LEFT || this->x_empty_case == this->size - 1) {
+	if (this->last_move == LEFT || this->x_empty_case == this->size - 1)
+	{
 		return (nullptr);
 	}
 
-	Board	*board_cpy = new Board(this);
-	int		temp_case;
+	Board *board_cpy = new Board(this);
+	int temp_case;
 
 	temp_case = board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case + 1];
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case + 1] = 0;
@@ -447,20 +473,24 @@ Board *Board::move_right()
 	board_cpy->x_empty_case++;
 	board_cpy->refresh_hash();
 	board_cpy->set_last_move(RIGHT);
-	board_cpy->g_cost++;
+	if (algo_type != GREADY)
+	{
+		board_cpy->g_cost++;
+	}
 
 	return (board_cpy);
 }
 
 // ====== LEFT
-Board *Board::move_left()
+Board *Board::move_left(int algo_type)
 {
-	if (this->last_move == RIGHT || this->x_empty_case == 0) {
+	if (this->last_move == RIGHT || this->x_empty_case == 0)
+	{
 		return (nullptr);
 	}
 
-	Board	*board_cpy = new Board(this);
-	int		temp_case;
+	Board *board_cpy = new Board(this);
+	int temp_case;
 
 	temp_case = board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case - 1];
 	board_cpy->board[board_cpy->y_empty_case][board_cpy->x_empty_case - 1] = 0;
@@ -469,7 +499,10 @@ Board *Board::move_left()
 	board_cpy->x_empty_case--;
 	board_cpy->refresh_hash();
 	board_cpy->set_last_move(LEFT);
-	board_cpy->g_cost++;
+	if (algo_type != GREADY)
+	{
+		board_cpy->g_cost++;
+	}
 
 	return (board_cpy);
 }
@@ -478,15 +511,15 @@ Board *Board::move_left()
 // ================
 // ======
 
-
 // ====== [ == ]
-bool	Board::operator==(const Board &board) const
+bool Board::operator==(const Board &board) const
 {
 	for (int y(0); y < this->size; y++)
 	{
 		for (int x(0); x < this->size; x++)
 		{
-			if (this->board[y][x] != board.board[y][x]) {
+			if (this->board[y][x] != board.board[y][x])
+			{
 				return (false);
 			}
 		}

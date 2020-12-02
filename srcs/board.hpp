@@ -38,10 +38,10 @@ class Board {
 		void show() const;
 		void show_more() const;
 
-		Board			*move_up();
-		Board			*move_down();
-		Board			*move_right();
-		Board			*move_left();
+		Board			*move_up(int algo_type);
+		Board			*move_down(int algo_type);
+		Board			*move_right(int algo_type);
+		Board			*move_left(int algo_type);
 
 		bool			operator==(const Board &board) const;
 
