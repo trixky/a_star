@@ -95,6 +95,7 @@ void algo(Goal *goal, OpenList &open_list, ClosedList &close_list, int (*hrs)(in
 	nbr_of_moves = show_ride_up(open_list.top(), true);
 	std::cout << "Complexity in time : [ " << time_complexity << " ]" << std::endl;
 	std::cout << "Complexity in memory : [ " << memory_complexity << " ]" << std::endl;
+	std::cout << "Complexity in size (bytes) : [ " << sizeof(Board) * memory_complexity << " ]" << std::endl;
 	std::cout << "Number of moves from initial state : [ " << nbr_of_moves << " ]" << std::endl;
 	clear_board_vector(board_vector);
 }
