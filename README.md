@@ -1,4 +1,4 @@
-# inference_engine
+# a_star
 
 An implementation of the [A\*](https://en.wikipedia.org/wiki/A*_search_algorithm) algorithm (with its [greedy](https://en.wikipedia.org/wiki/Greedy_algorithm) and [uniform-cost](https://en.wikipedia.org/?title=Uniform-cost_search&redirect=no) variants) solving [N-puzzles](https://en.wikipedia.org/wiki/15_puzzle) of various sizes, as optimally as possible.
 
