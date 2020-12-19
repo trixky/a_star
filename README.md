@@ -25,13 +25,13 @@ An implementation of the [A\*](https://en.wikipedia.org/wiki/A*_search_algorithm
 
 ## Usage
 
-first option **(heurisics)**:
+First option **(heurisics)**:
 
 - 0 : Manhattan Distance _(best)_
 - 1 : Hamming Distance
 - 2 : Linear conflict and manhattan distance
 
-second option **(algorithms)**:
+Second option **(algorithms)**:
 
 - a : A\*
 - g : Greedy
