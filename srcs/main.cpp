@@ -104,13 +104,13 @@ int usage()
 {
 	std::cout << "N_Puzzle usage: n_puzzle [-0; -1; -2] [-a; -g; -u] [file]" << std::endl;
 	std::cout << "  Heuristics:" << std::endl;
-	std::cout << "    -0: Manhattan Distance Heuristic." << std::endl;
-	std::cout << "    -1: Hamming Distance Heuristic." << std::endl;
-	std::cout << "    -2: Linear Conflict and Manhattan Distance Heuristic." << std::endl;
-	std::cout << "  Algorithm:" << std::endl;
-	std::cout << "    -a: A* (A Star)." << std::endl;
-	std::cout << "    -g: Greedy Search." << std::endl;
-	std::cout << "    -u: Uniform Cost." << std::endl;
+	std::cout << "    -0: Manhattan Distance Heuristic" << std::endl;
+	std::cout << "    -1: Hamming Distance Heuristic" << std::endl;
+	std::cout << "    -2: Linear Conflict and Manhattan Distance Heuristic" << std::endl;
+	std::cout << "  Algorithms:" << std::endl;
+	std::cout << "    -a: A*" << std::endl;
+	std::cout << "    -g: Greedy" << std::endl;
+	std::cout << "    -u: Uniform cost" << std::endl;
 	return (1);
 }
 
