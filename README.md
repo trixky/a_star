@@ -25,19 +25,17 @@ An implementation of the [A\*](https://en.wikipedia.org/wiki/A*_search_algorithm
 
 ## Usage
 
-first argument **(heurisics)**:
+first option **(heurisics)**:
 
 - 0 : Manhattan Distance _(best)_
 - 1 : Hamming Distance
 - 2 : Linear conflict and manhattan distance
 
-second argument **(algorithms)**:
+second option **(algorithms)**:
 
 - a : A\*
 - g : Greedy
 - u : Uniform cost
-
-third argument : Input file
 
 ```
 make
